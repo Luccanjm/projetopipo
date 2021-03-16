@@ -1,0 +1,192 @@
+{
+  "planoSaude": [
+    {
+      "id": 1,
+      "nomePlano": "Norte Europa"
+    },
+    {
+      "id": 2,
+      "nomePlano": "Pampulha Intermédica"
+    }
+  ],
+  "planoDental": [
+    {
+      "id": 1,
+      "nomePlano": "Dental Sorriso"
+    },
+    {
+      "id": 2,
+      "nomePlano": "OdontoP"
+    }
+  ],
+  "planoSaudeMental": [
+    {
+      "id": 1,
+      "nomePlano": "Mente Sã, Corpo São"
+    },
+    {
+      "id": 2,
+      "nomePlano": "MeditCorp"
+    }
+  ],
+  "empresas": [
+    {
+      "id": 1,
+      "nome": "Acme Co",
+      "cnpj": "99.230.485.0001-23",
+      "qtdPlanos": "2",
+      "planoDentalEmpresa": "Dental Sorriso",
+      "planoSaudeEmpresa": "Norte Europa",
+      "planoSaudeMentalEmpresa": "--"
+    },
+    {
+      "id": 2,
+      "nome": "Tio Patinhas Bank",
+      "cnpj": "12.854.200.0001-13",
+      "qtdPlanos": "3",
+      "planoDentalEmpresa": "Dental Sorriso",
+      "planoSaudeEmpresa": "Pampulha Intermédica",
+      "planoSaudeMentalEmpresa": "Mente Sã, Corpo São"
+    },
+    {
+      "id": 3,
+      "nome": "JongPlay",
+      "cnpj": "33.123.777.0001-05",
+      "qtdPlanos": "2",
+      "planoDentalEmpresa": "OdontoP",
+      "planoSaudeEmpresa": "Pampulha Intermédica",
+      "planoSaudeMentalEmpresa": "--"
+    },
+    {
+      "id": 4,
+      "nome": "WipShop",
+      "cnpj": "02.848.023.0001-12",
+      "qtdPlanos": "2",
+      "planoDentalEmpresa": "--",
+      "planoSaudeEmpresa": "Norte Europa",
+      "planoSaudeMentalEmpresa": "MeditCorp"
+    }
+  ],
+  "beneficiarios": [
+    {
+      "id": 1,
+      "nome": "Maria Silva",
+      "cpf": "09222123567",
+      "dtAdmissao": "2020-03-12",
+      "email": "mariasilva@empr.br",
+      "endereco": "Av Paulista, 1552,São Paulo - SP",
+      "peso": "62",
+      "altura": "1.60",
+      "horasMed": "5.3",
+      "nomeEmpresa": "Tio Patinhas Bank",
+      "planoDentalNome": "Dental Sorriso",
+      "planoSaudeNome": "Pampulha Intermédica",
+      "planoSaudeMentalNome": "Mente Sã, Corpo São"
+    },
+    {
+      "id": 2,
+      "nome": "Amora Silva",
+      "cpf": "12545895633",
+      "dtAdmissao": "2020-03-12",
+      "email": "amora@empr.br",
+      "endereco": "Av Amora, 222, Rio de Janeiro - RJ",
+      "peso": "85",
+      "altura": "1.53",
+      "horasMed": "3",
+      "nomeEmpresa": "Tio Patinhas Bank",
+      "planoDentalNome": "Dental Sorriso",
+      "planoSaudeNome": "Pampulha Intermédica",
+      "planoSaudeMentalNome": "Mente Sã, Corpo São"
+    },
+    {
+      "id": 3,
+      "nome": "Joao Silva",
+      "cpf": "12545895633",
+      "dtAdmissao": "2020-03-12",
+      "email": "joaosilva@empr.br",
+      "endereco": "Av Robson, 222, Rio de Janeiro - RJ",
+      "peso": "85",
+      "altura": "1.93",
+      "horasMed": "3",
+      "nomeEmpresa": "Tio Patinhas Bank",
+      "planoDentalNome": "Dental Sorriso",
+      "planoSaudeNome": "Pampulha Intermédica",
+      "planoSaudeMentalNome": "Mente Sã, Corpo São"
+    },
+    {
+      "nome": "Claudia Pereira",
+      "cpf": "09222123567",
+      "dtAdmissao": "2020-03-12",
+      "email": "claudia@gmail.com",
+      "endereco": "rua 2",
+      "peso": "40",
+      "altura": "1.60",
+      "horasMed": "2",
+      "nomeEmpresa": "Tio Patinhas Bank",
+      "planoDentalNome": "Dental Sorriso",
+      "planoSaudeMentalNome": "",
+      "planoSaudeNome": "Pampulha Intermédica",
+      "id": 4
+    },
+    {
+      "nome": "Joana Cept",
+      "cpf": "09222123567",
+      "dtAdmissao": "2020-03-12",
+      "email": "joana@gmail.com",
+      "endereco": "rua 4",
+      "peso": "50",
+      "altura": "1.63",
+      "horasMed": "1",
+      "nomeEmpresa": "Acme Co",
+      "planoDentalNome": "",
+      "planoSaudeMentalNome": "",
+      "planoSaudeNome": "Norte Europa",
+      "id": 5
+    },
+    {
+      "nome": "Gabriel Salian",
+      "cpf": "77222123567",
+      "dtAdmissao": "2020-03-12",
+      "email": "gabriel@gmail.com",
+      "endereco": "rua 5",
+      "peso": "80",
+      "altura": "1.90",
+      "horasMed": "5.3",
+      "nomeEmpresa": "Acme Co",
+      "planoDentalNome": "Dental Sorriso",
+      "planoSaudeMentalNome": "",
+      "planoSaudeNome": "Norte Europa",
+      "id": 6
+    },
+    {
+      "nome": "LUCCA NUNES DE JESUS MARTINELLI",
+      "cpf": "123123123",
+      "dtAdmissao": "2003-02-12",
+      "email": "LUCNJM@GMAIL.COM",
+      "endereco": "RUA IEDA",
+      "peso": "--",
+      "altura": "--",
+      "horasMed": "0",
+      "nomeEmpresa": "Acme Co",
+      "planoDentalNome": "",
+      "planoSaudeMentalNome": "--",
+      "planoSaudeNome": "Norte Europa",
+      "id": 7
+    },
+    {
+      "nome": "LUCCA NUNES DE JESUS MARTINELLI",
+      "cpf": "12312312",
+      "dtAdmissao": "12312-03-12",
+      "email": "LUCNJM@GMAIL.COM",
+      "endereco": "RUA IEDA",
+      "peso": "45",
+      "altura": "163",
+      "horasMed": "--",
+      "nomeEmpresa": "Tio Patinhas Bank",
+      "planoDentalNome": "Dental Sorriso",
+      "planoSaudeMentalNome": "--",
+      "planoSaudeNome": "",
+      "id": 8
+    }
+  ]
+}
