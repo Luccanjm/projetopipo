@@ -2,11 +2,15 @@
   "planoSaude": [
     {
       "id": 1,
-      "nomePlano": "Norte Europa"
+      "nomePlano": "Norte Europa",
+      "emailIsTrue": true,
+      "enderecoIsTrue": false
     },
     {
       "id": 2,
-      "nomePlano": "Pampulha Intermédica"
+      "nomePlano": "Pampulha Intermédica",
+      "emailIsTrue": false,
+      "enderecoIsTrue": true
     }
   ],
   "planoDental": [
@@ -187,6 +191,21 @@
       "planoSaudeMentalNome": "--",
       "planoSaudeNome": "",
       "id": 8
+    },
+    {
+      "nome": "LUCCA NUNES DE JESUS MARTINELLI",
+      "cpf": "1323123123",
+      "dtAdmissao": "1233-03-12",
+      "email": "",
+      "endereco": "RUA IEDA",
+      "peso": "--",
+      "altura": "--",
+      "horasMed": "22",
+      "nomeEmpresa": "Tio Patinhas Bank",
+      "planoDentalNome": "",
+      "planoSaudeMentalNome": "Mente Sã, Corpo São",
+      "planoSaudeNome": "Pampulha Intermédica",
+      "id": 9
     }
   ]
 }

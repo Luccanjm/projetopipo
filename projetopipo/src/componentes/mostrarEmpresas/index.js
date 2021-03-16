@@ -15,7 +15,6 @@ const MostrarEmpresas = () => {
                 const resposta = await api.get('empresas');
                setEmpresas(resposta.data);
 
-                // console.log(empresas);
             } catch (error) {
                 console.log("Erro na busca da API(exibirEmpresas)", error);
                 setErroMensagem(error);
@@ -23,12 +22,14 @@ const MostrarEmpresas = () => {
         },[empresas]
     );
 
+
     useEffect(() => {
         exibirEmpresas();
     },[exibirEmpresas])
 
     return(
         <ContainerTable>
+                
             <Table id="tabelaEmpresa">
 
                 <thead>
@@ -61,6 +62,7 @@ const MostrarEmpresas = () => {
                     )}
                 </tbody>
             </Table>
+  
         </ContainerTable>
         
     );

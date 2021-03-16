@@ -43,6 +43,9 @@ const AdicionarBeneficiarios = () => {
     const [planoDental, setPlanoDental] = useState([]);
     const [planoSaudeMental, setPlanoSaudeMental] = useState([]);
 
+    const [dadosPlano, setDadosPlano] = useState([]);
+    const [emailTrue, setEmailTrue] = useState();
+    const [enderecoTrue, setEnderecoTrue] = useState();
     const { id, nome, cnpj, qtdPlanos, qtdBenef, planoDentalEmpresa,planoSaudeEmpresa, planoSaudeMentalEmpresa  } = useParams();
 
 // --------------------------------------------------------------------------------------------------------------------------------------------------
@@ -54,12 +57,16 @@ const AdicionarBeneficiarios = () => {
             document.getElementById('horasMeditadasEtiqueta').style.display = 'none';
             document.getElementById('alturaBeneficiario').style.width = '240px';
             document.getElementById('pesoBeneficiario').style.width = '240px';
-            document.getElementById('emailBeneficiario').style.width = '560px';
             document.getElementById('checkboxSaudeMental').style.display = 'none';
             document.getElementById('checkboxSaudeMentalEtiqueta').style.display = 'none';
             setHorasMed('0')
             setPlanoSaudeMentalNome("--");
+            if(dadosPlano.emailIsTrue){
+                document.getElementById('emailBeneficiario').style.width = '560px';
 
+            }else{
+                setEmail("")
+            }
         }
         if(planoDentalEmpresa === "--"){
             document.getElementById('checkboxDental').style.display = 'none';
@@ -71,6 +78,7 @@ const AdicionarBeneficiarios = () => {
    function verificarPlanosSelecionados() {
         var checkDental = document.getElementById("checkboxDental");
         var checkSaudeMental = document.getElementById("checkboxSaudeMental");
+        var checkSaude = document.getElementById("checkboxSaude");
 
         if(checkDental.checked){
             document.getElementById('alturaBeneficiario').style.display = 'inline-block';
@@ -90,25 +98,69 @@ const AdicionarBeneficiarios = () => {
         if(checkSaudeMental.checked){
             document.getElementById('horasMeditadasEtiqueta').style.display = 'inline-block';
             document.getElementById('horasMeditadas').style.display = 'inline-block';
+            if(dadosPlano.emailIsTrue){
             document.getElementById('emailBeneficiario').style.width = '300px';
+            }else{
+                setEmail("")
+            }
 
         }else{
             document.getElementById('horasMeditadasEtiqueta').style.display = 'none';
-            document.getElementById('horasMeditadas').style.display = 'none';  
-            document.getElementById('emailBeneficiario').style.width = '560px';
+            document.getElementById('horasMeditadas').style.display = 'none'; 
+            if(dadosPlano.emailIsTrue){
+                document.getElementById('emailBeneficiario').style.width = '560px';
+
+            }else{
+                setEmail("")
+            }
             setPlanoSaudeMentalNome("--");
             setHorasMed("--");
+
         }
         if(checkDental.checked && !checkSaudeMental.checked){
             document.getElementById('alturaBeneficiario').style.width = '240px';
             document.getElementById('pesoBeneficiario').style.width = '240px';
+            
         }
+        if(checkSaude.checked){
+            document.getElementById('dtAdmissaoEtiqueta').style.display = 'inline-block';
+            document.getElementById('dtAdmissao').style.display = 'inline-block'; 
+            if(dadosPlano.emailIsTrue){
+                document.getElementById('emailBeneficiario').style.display = 'inline-block';
+
+            }else{
+                setEmail("")
+            }
+
+        }else{
+            document.getElementById('dtAdmissaoEtiqueta').style.display = 'none';
+            document.getElementById('dtAdmissao').style.display = 'none'; 
+            if(dadosPlano.emailIsTrue){
+                document.getElementById('emailBeneficiario').style.display = 'none'; 
+
+            }else{
+                setEmail("")
+            }
+        }
+
     }
     setInterval(() => {
         verificarPlano();
         verificarPlanosSelecionados();
 
     }, 100);
+
+    const buscarDadosPlanoSaude = useCallback(
+        async() => {
+            try {
+                const resposta = await api.get(`planoSaude?nomePlano=${planoSaudeEmpresa}`);
+               setDadosPlano(resposta.data);
+            } catch (error) {
+                console.log("Erro na busca da API(buscarDadosPlanoSaude)", error);
+                setErroMensagem(error);
+            }
+        },[dadosPlano]
+    );
 
     const exibirPlanoSaude = useCallback(
         async() => {
@@ -153,8 +205,9 @@ const AdicionarBeneficiarios = () => {
         exibirPlanoSaude();
         exibirPlanoDental();
         exibirPlanoSaudeMental();
+        buscarDadosPlanoSaude();
         
-    },[])
+    },[buscarDadosPlanoSaude])
 
 
 
@@ -223,9 +276,9 @@ const AdicionarBeneficiarios = () => {
             <Box>
                 <TituloBox>Cadastramento de Beneficiário {nome}</TituloBox>
                 <Formulario  onSubmit={(e) => adicionarBeneficiario(e)}>
-
                     <BoxForm>
-                        <TituloCheck>Selecione pelo menos 1 plano</TituloCheck>
+                        
+                                <TituloCheck>Selecione pelo menos 1 plano</TituloCheck>
 
                         <BoxCheck>
                             <Input id="checkboxSaude" type="checkbox" onChange={(e) => setPlanoSaudeNome(e.target.value) } value={planoSaudeEmpresa} />
@@ -245,7 +298,7 @@ const AdicionarBeneficiarios = () => {
                     <Etiqueta for="cpfBeneficiarios">CPF</Etiqueta>
                     <Input type="number" id="cpfBeneficiario" placeholder="CPF" required value={cpf} onChange={(e) => setCpf(e.target.value)}/>
 
-                    <Etiqueta for="dtAdmissao">Dt. Admissão</Etiqueta>
+                    <Etiqueta for="dtAdmissao" id="dtAdmissaoEtiqueta">Dt. Admissão</Etiqueta>
                     <Input type="date" id="dtAdmissao" placeholder="Data Admissão" required value={dtAdmissao} onChange={(e) => setDtAdmissao(e.target.value)}/>
 
                     <Etiqueta for="pesoBeneficiario" id="pesoBeneficiarioEtiqueta">Peso (kg)</Etiqueta>
@@ -256,12 +309,21 @@ const AdicionarBeneficiarios = () => {
 
                     <Etiqueta for="horasMed" id="horasMeditadasEtiqueta">Horas Meditadas</Etiqueta>
                     <Input type="text" id="horasMeditadas" placeholder="Horas Meditadas" required value={horasMed} onChange={(e) => setHorasMed(e.target.value)} />
-
-                    <Etiqueta for="emailBeneficiario">E-mail</Etiqueta>
-                    <Input type="email" id="emailBeneficiario" placeholder="E-mail" required value={email} onChange={(e) => setEmail(e.target.value)} />
-
-                    <Etiqueta for="enderecoBeneficiario">Endereço Completo</Etiqueta>
+                    
+                    {dadosPlano.map(item => <>{item.emailIsTrue ? 
+                    <>
+                    <Etiqueta for="emailBeneficiario" id="emailBeneficiarioEtiqueta">E-mail</Etiqueta>
+                    <Input type="email" id="emailBeneficiario" placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    </>
+                     : ""}</>)}      
+                    
+                    {dadosPlano.map(item => <p>{item.enderecoIsTrue  ? 
+                    <>
+                   <Etiqueta for="enderecoBeneficiario" id="enderecoBeneficiarioEtiqueta">Endereço Completo</Etiqueta>
                     <Input type="text" id="enderecoBeneficiario" placeholder="Endereço Completo" required value={endereco} onChange={(e) => setEndereco(e.target.value)} />
+                    </>
+                     : ""}</p>)}      
+                   
 
 
                     <BoxForm>
