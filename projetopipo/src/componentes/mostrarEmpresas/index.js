@@ -43,19 +43,19 @@ const MostrarEmpresas = () => {
                     {empresas.map((item) =>
                         <tr>
                             <td onClick={() =>
-                                window.location.href = `/empresas/${item.id}/${item.nome}/${item.cnpj}/${item.qtdPlanos}/${item.qtdBenef}/${item.planoDentalEmpresa}/${item.planoSaudeEmpresa}/${item.planoSaudeMentalEmpresa}`}>
+                                window.location.href = `/empresas/${item.id}/${item.nome}/${item.cnpj}/${item.qtdPlanos}/${item.planoDentalEmpresa}/${item.planoSaudeEmpresa}/${item.planoSaudeMentalEmpresa}`}>
                                     {item.nome}</td>
 
                             <td onClick={() =>
-                                window.location.href = `/empresas/${item.id}/${item.nome}/${item.cnpj}/${item.qtdPlanos}/${item.qtdBenef}/${item.planoDentalEmpresa}/${item.planoSaudeEmpresa}/${item.planoSaudeMentalEmpresa}`}>
+                                window.location.href = `/empresas/${item.id}/${item.nome}/${item.cnpj}/${item.qtdPlanos}/${item.planoDentalEmpresa}/${item.planoSaudeEmpresa}/${item.planoSaudeMentalEmpresa}`}>
                                     {item.cnpj}</td>
 
                             <td onClick={() =>
-                                window.location.href = `/empresas/${item.id}/${item.nome}/${item.cnpj}/${item.qtdPlanos}/${item.qtdBenef}/${item.planoDentalEmpresa}/${item.planoSaudeEmpresa}/${item.planoSaudeMentalEmpresa}`}>
+                                window.location.href = `/empresas/${item.id}/${item.nome}/${item.cnpj}/${item.qtdPlanos}/${item.planoDentalEmpresa}/${item.planoSaudeEmpresa}/${item.planoSaudeMentalEmpresa}`}>
                                     {item.qtdPlanos}</td>
 
                             <td onClick={() =>
-                                window.location.href = `/adicionar/${item.id}/${item.nome}/${item.cnpj}/${item.qtdPlanos}/${item.qtdBenef}/${item.planoDentalEmpresa}/${item.planoSaudeEmpresa}/${item.planoSaudeMentalEmpresa}`}>
+                                window.location.href = `/adicionar/${item.id}/${item.nome}/${item.cnpj}/${item.qtdPlanos}/${item.planoDentalEmpresa}/${item.planoSaudeEmpresa}/${item.planoSaudeMentalEmpresa}`}>
                                     <BotaoRedirecionar><LinkBotao>Adicionar Beneficiário</LinkBotao></BotaoRedirecionar>
                             </td>
                         </tr>

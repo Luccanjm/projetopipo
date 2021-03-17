@@ -46,7 +46,7 @@ const AdicionarBeneficiarios = () => {
     const [dadosPlano, setDadosPlano] = useState([]);
     const [emailTrue, setEmailTrue] = useState();
     const [enderecoTrue, setEnderecoTrue] = useState();
-    const { id, nome, cnpj, qtdPlanos, qtdBenef, planoDentalEmpresa,planoSaudeEmpresa, planoSaudeMentalEmpresa  } = useParams();
+    const { id, nome, cnpj, qtdPlanos, planoDentalEmpresa,planoSaudeEmpresa, planoSaudeMentalEmpresa  } = useParams();
 
 // --------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -64,8 +64,6 @@ const AdicionarBeneficiarios = () => {
             if(dadosPlano.emailIsTrue){
                 document.getElementById('emailBeneficiario').style.width = '560px';
 
-            }else{
-                setEmail("")
             }
         }
         if(planoDentalEmpresa === "--"){
@@ -79,42 +77,116 @@ const AdicionarBeneficiarios = () => {
         var checkDental = document.getElementById("checkboxDental");
         var checkSaudeMental = document.getElementById("checkboxSaudeMental");
         var checkSaude = document.getElementById("checkboxSaude");
+        function exibirNome(){
+            document.getElementById('nomeBeneficiario').style.display = 'flex';
+            document.getElementById('nomeBeneficiarioEtiqueta').style.display = 'flex';
 
-        if(checkDental.checked){
-            document.getElementById('alturaBeneficiario').style.display = 'inline-block';
+        } 
+        function esconderNome(){
+            document.getElementById('nomeBeneficiario').style.display = 'none';
+            document.getElementById('nomeBeneficiarioEtiqueta').style.display = 'none';
+        }
+        function exibirPeso(){
             document.getElementById('pesoBeneficiario').style.display = 'inline-block';
-            document.getElementById('alturaBeneficiarioEtiqueta').style.display = 'inline-block';
             document.getElementById('pesoBeneficiarioEtiqueta').style.display = 'inline-block';
 
-        }else{
-            document.getElementById('alturaBeneficiario').style.display = 'none';
+        }
+        function esconderPeso(){
             document.getElementById('pesoBeneficiario').style.display = 'none';
-            document.getElementById('alturaBeneficiarioEtiqueta').style.display = 'none';
             document.getElementById('pesoBeneficiarioEtiqueta').style.display = 'none';
+        }
+        function exibirAltura(){
+            document.getElementById('alturaBeneficiario').style.display = 'inline-block';
+            document.getElementById('alturaBeneficiarioEtiqueta').style.display = 'inline-block';
+
+        }
+        function esconderAltura(){
+            document.getElementById('alturaBeneficiario').style.display = 'none';
+            document.getElementById('alturaBeneficiarioEtiqueta').style.display = 'none';
+        }
+        function exibirHoras(){
+            document.getElementById('horasMeditadas').style.display = 'inline-block';
+            document.getElementById('horasMeditadasEtiqueta').style.display = 'inline-block';
+
+        }
+        function esconderHoras(){
+            document.getElementById('horasMeditadas').style.display = 'none';
+            document.getElementById('horasMeditadasEtiqueta').style.display = 'none';
+        }
+        function exibirDtAdmissao(){
+            document.getElementById('dtAdmissao').style.display = 'inline-block';
+            document.getElementById('dtAdmissaoEtiqueta').style.display = 'inline-block';
+
+        }
+        function esconderDtAdmissao(){
+            document.getElementById('dtAdmissao').style.display = 'none';
+            document.getElementById('dtAdmissaoEtiqueta').style.display = 'none';
+        }
+        function exibirEmail(){
+            document.getElementById('emailBeneficiario').style.display = 'flex';
+            document.getElementById('emailBeneficiarioEtiqueta').style.display = 'flex';
+
+        }
+        function esconderEmail(){
+            document.getElementById('emailBeneficiario').style.display = 'none';
+            document.getElementById('emailBeneficiarioEtiqueta').style.display = 'none';
+        }
+        function exibirEndereco(){
+            document.getElementById('enderecoBeneficiario').style.display = 'flex';
+            document.getElementById('enderecoBeneficiarioEtiqueta').style.display = 'flex';
+
+        }
+        function esconderEndereco(){
+            document.getElementById('enderecoBeneficiario').style.display = 'none';
+            document.getElementById('enderecoBeneficiarioEtiqueta').style.display = 'none';
+        }
+        function verificarEmailTrue(){
+            if(emailTrue){
+                exibirEmail();
+
+            }else if(!emailTrue){
+                esconderEmail();
+                setEmail("")
+            }
+        }
+        function verificarEnderecoTrue(){
+            if(enderecoTrue){
+                exibirEndereco();
+
+            }else if(!enderecoTrue){
+                esconderEndereco();
+                setEndereco("")
+            }
+        }
+
+        if(checkDental.checked){
+            exibirNome();
+            exibirPeso();
+            exibirAltura();
+
+        }else{
+            esconderNome();
+            esconderPeso();
+            esconderAltura();
             setAltura("--");
             setPeso("--");
 
         }
+        
         if(checkSaudeMental.checked){
-            document.getElementById('horasMeditadasEtiqueta').style.display = 'inline-block';
-            document.getElementById('horasMeditadas').style.display = 'inline-block';
+            exibirHoras();
+
             if(dadosPlano.emailIsTrue){
             document.getElementById('emailBeneficiario').style.width = '300px';
-            }else{
-                setEmail("")
             }
 
         }else{
-            document.getElementById('horasMeditadasEtiqueta').style.display = 'none';
-            document.getElementById('horasMeditadas').style.display = 'none'; 
+            esconderHoras();
             if(dadosPlano.emailIsTrue){
                 document.getElementById('emailBeneficiario').style.width = '560px';
-
-            }else{
-                setEmail("")
             }
             setPlanoSaudeMentalNome("--");
-            setHorasMed("--");
+            setHorasMed("0");
 
         }
         if(checkDental.checked && !checkSaudeMental.checked){
@@ -123,38 +195,32 @@ const AdicionarBeneficiarios = () => {
             
         }
         if(checkSaude.checked){
-            document.getElementById('dtAdmissaoEtiqueta').style.display = 'inline-block';
-            document.getElementById('dtAdmissao').style.display = 'inline-block'; 
-            if(dadosPlano.emailIsTrue){
-                document.getElementById('emailBeneficiario').style.display = 'inline-block';
-
-            }else{
-                setEmail("")
-            }
+            exibirDtAdmissao();
+            exibirNome();
+            verificarEmailTrue();
+            verificarEnderecoTrue();
 
         }else{
-            document.getElementById('dtAdmissaoEtiqueta').style.display = 'none';
-            document.getElementById('dtAdmissao').style.display = 'none'; 
-            if(dadosPlano.emailIsTrue){
-                document.getElementById('emailBeneficiario').style.display = 'none'; 
-
-            }else{
-                setEmail("")
-            }
+            esconderDtAdmissao();
+            verificarEmailTrue();
+            verificarEnderecoTrue();
         }
 
     }
     setInterval(() => {
+
         verificarPlano();
         verificarPlanosSelecionados();
-
     }, 100);
-
     const buscarDadosPlanoSaude = useCallback(
         async() => {
             try {
                 const resposta = await api.get(`planoSaude?nomePlano=${planoSaudeEmpresa}`);
-               setDadosPlano(resposta.data);
+                setDadosPlano(resposta.data);
+                setEmailTrue(dadosPlano.map((item) => item.emailIsTrue));
+                setEnderecoTrue(dadosPlano.map((item) => item.enderecoIsTrue));
+                setEnderecoTrue(enderecoTrue[0] === "true" ? "true" : "false");
+                console.log(enderecoTrue);
             } catch (error) {
                 console.log("Erro na busca da API(buscarDadosPlanoSaude)", error);
                 setErroMensagem(error);
@@ -277,9 +343,7 @@ const AdicionarBeneficiarios = () => {
                 <TituloBox>Cadastramento de Beneficiário {nome}</TituloBox>
                 <Formulario  onSubmit={(e) => adicionarBeneficiario(e)}>
                     <BoxForm>
-                        
                                 <TituloCheck>Selecione pelo menos 1 plano</TituloCheck>
-
                         <BoxCheck>
                             <Input id="checkboxSaude" type="checkbox" onChange={(e) => setPlanoSaudeNome(e.target.value) } value={planoSaudeEmpresa} />
                             <Etiqueta for="checkboxSaude" id="checkboxSaudeEtiqueta">{planoSaudeEmpresa}</Etiqueta>
@@ -292,10 +356,10 @@ const AdicionarBeneficiarios = () => {
                         </BoxCheck> 
                     </BoxForm>
 
-                    <Etiqueta for="nomeBeneficiario">Nome Completo</Etiqueta>
+                    <Etiqueta for="nomeBeneficiario" id="nomeBeneficiarioEtiqueta">Nome Completo</Etiqueta>
                     <Input type="text" id="nomeBeneficiario" placeholder="Nome Completo" required value={nomeBeneficiario} onChange={(e) => setNomeBeneficiario(e.target.value)}/>
 
-                    <Etiqueta for="cpfBeneficiarios">CPF</Etiqueta>
+                    <Etiqueta for="cpfBeneficiarios" id="cpfBeneficiarioEtiqueta">CPF</Etiqueta>
                     <Input type="number" id="cpfBeneficiario" placeholder="CPF" required value={cpf} onChange={(e) => setCpf(e.target.value)}/>
 
                     <Etiqueta for="dtAdmissao" id="dtAdmissaoEtiqueta">Dt. Admissão</Etiqueta>
@@ -309,8 +373,14 @@ const AdicionarBeneficiarios = () => {
 
                     <Etiqueta for="horasMed" id="horasMeditadasEtiqueta">Horas Meditadas</Etiqueta>
                     <Input type="text" id="horasMeditadas" placeholder="Horas Meditadas" required value={horasMed} onChange={(e) => setHorasMed(e.target.value)} />
-                    
-                    {dadosPlano.map(item => <>{item.emailIsTrue ? 
+
+                    <Etiqueta for="emailBeneficiario" id="emailBeneficiarioEtiqueta">E-mail</Etiqueta>
+                    <Input type="email" id="emailBeneficiario" placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)} />
+
+                    <Etiqueta for="enderecoBeneficiario" id="enderecoBeneficiarioEtiqueta">Endereço Completo</Etiqueta>
+                    <Input type="text" id="enderecoBeneficiario" placeholder="Endereço Completo" required value={endereco} onChange={(e) => setEndereco(e.target.value)} />
+
+                    {/* {dadosPlano.map(item => <>{item.emailIsTrue ? 
                     <>
                     <Etiqueta for="emailBeneficiario" id="emailBeneficiarioEtiqueta">E-mail</Etiqueta>
                     <Input type="email" id="emailBeneficiario" placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)} />
@@ -322,7 +392,7 @@ const AdicionarBeneficiarios = () => {
                    <Etiqueta for="enderecoBeneficiario" id="enderecoBeneficiarioEtiqueta">Endereço Completo</Etiqueta>
                     <Input type="text" id="enderecoBeneficiario" placeholder="Endereço Completo" required value={endereco} onChange={(e) => setEndereco(e.target.value)} />
                     </>
-                     : ""}</p>)}      
+                     : ""}</p>)}       */}
                    
 
 

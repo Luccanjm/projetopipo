@@ -3,14 +3,14 @@
     {
       "id": 1,
       "nomePlano": "Norte Europa",
-      "emailIsTrue": true,
-      "enderecoIsTrue": false
+      "emailIsTrue": "true",
+      "enderecoIsTrue": "false"
     },
     {
       "id": 2,
       "nomePlano": "Pampulha Intermédica",
-      "emailIsTrue": false,
-      "enderecoIsTrue": true
+      "emailIsTrue": "false",
+      "enderecoIsTrue": "true"
     }
   ],
   "planoDental": [
