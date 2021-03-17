@@ -33,10 +33,12 @@ const MostrarEmpresas = () => {
             <Table id="tabelaEmpresa">
 
                 <thead>
-                    <th>Nome</th>
-                    <th>CNPJ</th>
-                    <th>Qtd. Benefícios</th>
-                    <th>#</th>
+                    <tr>
+                        <th>Nome</th>
+                        <th>CNPJ</th>
+                        <th>Qtd. Benefícios</th>
+                        <th>#</th>
+                    </tr>
                 </thead>
 
                 <tbody>

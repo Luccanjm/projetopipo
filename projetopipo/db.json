@@ -3,14 +3,14 @@
     {
       "id": 1,
       "nomePlano": "Norte Europa",
-      "emailIsTrue": "true",
-      "enderecoIsTrue": "false"
+      "emailIsTrue": true,
+      "enderecoIsTrue": false
     },
     {
       "id": 2,
       "nomePlano": "Pampulha Intermédica",
-      "emailIsTrue": "false",
-      "enderecoIsTrue": "true"
+      "emailIsTrue": false,
+      "enderecoIsTrue": true
     }
   ],
   "planoDental": [
@@ -128,7 +128,7 @@
       "horasMed": "2",
       "nomeEmpresa": "Tio Patinhas Bank",
       "planoDentalNome": "Dental Sorriso",
-      "planoSaudeMentalNome": "",
+      "planoSaudeMentalNome": "--",
       "planoSaudeNome": "Pampulha Intermédica",
       "id": 4
     },
@@ -142,8 +142,8 @@
       "altura": "1.63",
       "horasMed": "1",
       "nomeEmpresa": "Acme Co",
-      "planoDentalNome": "",
-      "planoSaudeMentalNome": "",
+      "planoDentalNome": "--",
+      "planoSaudeMentalNome": "--",
       "planoSaudeNome": "Norte Europa",
       "id": 5
     },
@@ -172,7 +172,7 @@
       "altura": "--",
       "horasMed": "0",
       "nomeEmpresa": "Acme Co",
-      "planoDentalNome": "",
+      "planoDentalNome": "--",
       "planoSaudeMentalNome": "--",
       "planoSaudeNome": "Norte Europa",
       "id": 7
@@ -189,7 +189,7 @@
       "nomeEmpresa": "Tio Patinhas Bank",
       "planoDentalNome": "Dental Sorriso",
       "planoSaudeMentalNome": "--",
-      "planoSaudeNome": "",
+      "planoSaudeNome": "--",
       "id": 8
     },
     {
@@ -202,7 +202,7 @@
       "altura": "--",
       "horasMed": "22",
       "nomeEmpresa": "Tio Patinhas Bank",
-      "planoDentalNome": "",
+      "planoDentalNome": "--",
       "planoSaudeMentalNome": "Mente Sã, Corpo São",
       "planoSaudeNome": "Pampulha Intermédica",
       "id": 9

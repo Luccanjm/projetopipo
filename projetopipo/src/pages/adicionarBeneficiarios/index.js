@@ -141,21 +141,27 @@ const AdicionarBeneficiarios = () => {
             document.getElementById('enderecoBeneficiarioEtiqueta').style.display = 'none';
         }
         function verificarEmailTrue(){
+            enderecoTrue ? setEnderecoTrue(true) : setEnderecoTrue(false);
             if(emailTrue){
                 exibirEmail();
+                setEmail("")
 
             }else if(!emailTrue){
                 esconderEmail();
-                setEmail("")
+                setEmail("--")
+
             }
         }
         function verificarEnderecoTrue(){
+            enderecoTrue ? setEnderecoTrue(true) : setEnderecoTrue(false);
             if(enderecoTrue){
                 exibirEndereco();
+                setEndereco("")
 
             }else if(!enderecoTrue){
                 esconderEndereco();
-                setEndereco("")
+                setEndereco("--")
+
             }
         }
 
@@ -204,23 +210,26 @@ const AdicionarBeneficiarios = () => {
             esconderDtAdmissao();
             verificarEmailTrue();
             verificarEnderecoTrue();
+            esconderEndereco();
+            esconderEmail();
         }
 
     }
     setInterval(() => {
-
         verificarPlano();
         verificarPlanosSelecionados();
     }, 100);
+    
     const buscarDadosPlanoSaude = useCallback(
         async() => {
             try {
                 const resposta = await api.get(`planoSaude?nomePlano=${planoSaudeEmpresa}`);
                 setDadosPlano(resposta.data);
-                setEmailTrue(dadosPlano.map((item) => item.emailIsTrue));
-                setEnderecoTrue(dadosPlano.map((item) => item.enderecoIsTrue));
-                setEnderecoTrue(enderecoTrue[0] === "true" ? "true" : "false");
-                console.log(enderecoTrue);
+                setEmailTrue(dadosPlano.map(item => item.emailIsTrue ? setEmailTrue(true) : setEmailTrue(false)));
+                setEnderecoTrue(dadosPlano.map(item => item.enderecoIsTrue ? setEnderecoTrue(true) : setEnderecoTrue(false)));
+                console.log("email",emailTrue);
+                console.log("endereco",enderecoTrue);
+
             } catch (error) {
                 console.log("Erro na busca da API(buscarDadosPlanoSaude)", error);
                 setErroMensagem(error);
@@ -333,7 +342,6 @@ const AdicionarBeneficiarios = () => {
     )
       
     
-   
 
     return(
         <ContainerGrid>
@@ -346,13 +354,13 @@ const AdicionarBeneficiarios = () => {
                                 <TituloCheck>Selecione pelo menos 1 plano</TituloCheck>
                         <BoxCheck>
                             <Input id="checkboxSaude" type="checkbox" onChange={(e) => setPlanoSaudeNome(e.target.value) } value={planoSaudeEmpresa} />
-                            <Etiqueta for="checkboxSaude" id="checkboxSaudeEtiqueta">{planoSaudeEmpresa}</Etiqueta>
+                            <Etiqueta for="checkboxSaude" id="checkboxSaudeEtiqueta" key={planoSaudeEmpresa}>{planoSaudeEmpresa}</Etiqueta>
 
                             <Input id="checkboxDental" type="checkbox" onChange={(e) => setPlanoDentalNome(e.target.value) } value={planoDentalEmpresa} />
-                            <Etiqueta for="checkboxDental" id="checkboxDentalEtiqueta">{planoDentalEmpresa}</Etiqueta>
+                            <Etiqueta for="checkboxDental" id="checkboxDentalEtiqueta" key={planoDentalEmpresa}>{planoDentalEmpresa}</Etiqueta>
 
                             <Input id="checkboxSaudeMental" type="checkbox" onChange={(e) => setPlanoSaudeMentalNome(e.target.value) } value={planoSaudeMentalEmpresa} />
-                            <Etiqueta for="checkboxSaudeMental" id="checkboxSaudeMentalEtiqueta">{planoSaudeMentalEmpresa}</Etiqueta>
+                            <Etiqueta for="checkboxSaudeMental" id="checkboxSaudeMentalEtiqueta" key={planoSaudeMentalEmpresa}>{planoSaudeMentalEmpresa}</Etiqueta>
                         </BoxCheck> 
                     </BoxForm>
 
@@ -366,10 +374,10 @@ const AdicionarBeneficiarios = () => {
                     <Input type="date" id="dtAdmissao" placeholder="Data Admissão" required value={dtAdmissao} onChange={(e) => setDtAdmissao(e.target.value)}/>
 
                     <Etiqueta for="pesoBeneficiario" id="pesoBeneficiarioEtiqueta">Peso (kg)</Etiqueta>
-                    <Input type="number" id="pesoBeneficiario" placeholder="Peso (kg)" value={peso} onChange={(e) => setPeso(e.target.value)}/>
+                    <Input type="number" id="pesoBeneficiario" placeholder="Peso (kg)" required value={peso} onChange={(e) => setPeso(e.target.value)}/>
 
                     <Etiqueta for="alturaBeneficiario" id="alturaBeneficiarioEtiqueta">Altura (cm)</Etiqueta>
-                    <Input type="number" id="alturaBeneficiario" placeholder="Altura (cm)" value={altura} onChange={(e) => setAltura(e.target.value)}/>
+                    <Input type="number" id="alturaBeneficiario" placeholder="Altura (cm)" required value={altura} onChange={(e) => setAltura(e.target.value)}/>
 
                     <Etiqueta for="horasMed" id="horasMeditadasEtiqueta">Horas Meditadas</Etiqueta>
                     <Input type="text" id="horasMeditadas" placeholder="Horas Meditadas" required value={horasMed} onChange={(e) => setHorasMed(e.target.value)} />
@@ -383,7 +391,7 @@ const AdicionarBeneficiarios = () => {
                     {/* {dadosPlano.map(item => <>{item.emailIsTrue ? 
                     <>
                     <Etiqueta for="emailBeneficiario" id="emailBeneficiarioEtiqueta">E-mail</Etiqueta>
-                    <Input type="email" id="emailBeneficiario" placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <Input type="email" id="emailBeneficiario" placeholder="E-mail" required value={email} onChange={(e) => setEmail(e.target.value)} />
                     </>
                      : ""}</>)}      
                     

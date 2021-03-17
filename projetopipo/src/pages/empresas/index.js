@@ -89,27 +89,30 @@ const Empresas = () => {
                 <TableBeneficiarios>
 
                     <thead>
-                        <th>Nome</th>
-                        <th>CPF</th>
-                        <th>Dt.Admissão</th>
-                        <th>E-mail</th>
-                        <th>Endereço</th>
-                        <th>Peso(kg)</th>
-                        <th>Altura(cm)</th>
-                        <th>Horas Meditadas últimos 7 dias</th>
+                        <tr>
+                            <th>Nome</th>
+                            <th>CPF</th>
+                            <th>Dt.Admissão</th>
+                            <th>E-mail</th>
+                            <th>Endereço</th>
+                            <th>Peso(kg)</th>
+                            <th>Altura(cm)</th>
+                            <th>Horas Meditadas últimos 7 dias</th>
+                        </tr>
                     </thead>
 
                     <tbody>
                         {beneficiarios.map((item) =>
-                            <tr>
-                                <td>{item.nome}</td>
-                                <td>{item.cpf}</td>
-                                <td>{item.dtAdmissao}</td>
-                                <td>{item.email}</td>
-                                <td>{item.endereco}</td>
-                                <td>{item.peso}</td>
-                                <td>{item.altura}</td>
-                                <td>{item.horasMed}</td>
+                            <tr onClick={() =>
+                                window.location.href = `/beneficiarios/${item.id}/${item.nome}/${item.cpf}/${item.dtAdmissao}/${item.email}/${item.endereco}/${item.peso}/${item.altura}/${item.horasMed}/${item.nomeEmpresa}/${item.planoDentalNome}/${item.planoSaudeNome}/${item.planoSaudeMentalNome}`}>
+                                <td key={item.nome}>{item.nome}</td>
+                                <td key={item.cpf}>{item.cpf}</td>
+                                <td key={item.dtAdmissao}>{item.dtAdmissao}</td>
+                                <td key={item.email}>{item.email}</td>
+                                <td key={item.endereco}>{item.endereco}</td>
+                                <td key={item.peso}>{item.peso}</td>
+                                <td key={item.altura}>{item.altura}</td>
+                                <td key={item.horasMed}>{item.horasMed}</td>
                             </tr>
                         )}
                     </tbody>
