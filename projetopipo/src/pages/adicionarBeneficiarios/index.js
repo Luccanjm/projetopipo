@@ -44,8 +44,8 @@ const AdicionarBeneficiarios = () => {
     const [planoSaudeMental, setPlanoSaudeMental] = useState([]);
 
     const [dadosPlano, setDadosPlano] = useState([]);
-    const [emailTrue, setEmailTrue] = useState();
-    const [enderecoTrue, setEnderecoTrue] = useState();
+    const [emailTrue, setEmailTrue] = useState('');
+    const [enderecoTrue, setEnderecoTrue] = useState('');
     const { id, nome, cnpj, qtdPlanos, planoDentalEmpresa,planoSaudeEmpresa, planoSaudeMentalEmpresa  } = useParams();
 
 // --------------------------------------------------------------------------------------------------------------------------------------------------
@@ -55,10 +55,9 @@ const AdicionarBeneficiarios = () => {
             try {
                 const resposta = await api.get(`planoSaude?nomePlano=${planoSaudeEmpresa}`);
                 setDadosPlano(resposta.data);
-                setEmailTrue(dadosPlano.map(item => item.emailIsTrue ? setEmailTrue(true) : setEmailTrue(false)));
-                setEnderecoTrue(dadosPlano.map(item => item.enderecoIsTrue ? setEnderecoTrue(true) : setEnderecoTrue(false)));
-                // console.log("email",emailTrue);
-                // console.log("endereco",enderecoTrue);
+                setEmailTrue(dadosPlano.map(item => item.emailIsTrue ));
+                setEnderecoTrue(dadosPlano.map(item => item.enderecoIsTrue));
+
 
             } catch (error) {
                 console.log("Erro na busca da API(buscarDadosPlanoSaude)", error);
@@ -115,7 +114,6 @@ const AdicionarBeneficiarios = () => {
     },[buscarDadosPlanoSaude])
 
 
-
     const adicionarBeneficiario = useCallback(
 
         async(e) =>{
@@ -135,8 +133,10 @@ const AdicionarBeneficiarios = () => {
                 planoSaudeNome: planoSaudeNome
 
             }
-
+         
+            
         try {
+            
             const resposta = await api.post('beneficiarios', parametros);
             setNomeBeneficiario('');
             setCpf('');
@@ -162,7 +162,25 @@ const AdicionarBeneficiarios = () => {
         }, [nomeBeneficiario, cpf, dtAdmissao, email, endereco, peso, altura, horasMed, nomeEmpresa,planoDentalNome,planoSaudeMentalNome,planoSaudeNome]
         
     )
-      
+    function verificarCheckBox(){
+        var checkDental = document.getElementById("checkboxDental");
+        var checkSaudeMental = document.getElementById("checkboxSaudeMental");
+        var checkSaude = document.getElementById("checkboxSaude");
+
+        if(!checkSaude.checked && !checkSaudeMental.checked && !checkDental.checked){
+            document.getElementById('boxPrincipal').style.height = '200px';
+            document.getElementById('botaoAdicionar').style.display = 'none';
+            document.getElementById('cpfBeneficiarioEtiqueta').style.display = 'none';
+            document.getElementById('cpfBeneficiario').style.display = 'none';
+
+        }
+        if(checkSaude.checked || checkSaudeMental.checked || checkDental.checked){
+            document.getElementById('boxPrincipal').style.height = '600px';
+            document.getElementById('botaoAdicionar').style.display = 'flex';
+
+        }
+    }
+
     function verificarPlano(){
         if(planoSaudeMentalEmpresa === "--"){
             document.getElementById('horasMeditadas').style.display = 'none';
@@ -185,10 +203,11 @@ const AdicionarBeneficiarios = () => {
         }
     }
 
-   function verificarPlanosSelecionados() {
+    function verificarPlanosSelecionados() {
         var checkDental = document.getElementById("checkboxDental");
         var checkSaudeMental = document.getElementById("checkboxSaudeMental");
         var checkSaude = document.getElementById("checkboxSaude");
+
         function exibirNome(){
             document.getElementById('nomeBeneficiario').style.display = 'flex';
             document.getElementById('nomeBeneficiarioEtiqueta').style.display = 'flex';
@@ -230,44 +249,47 @@ const AdicionarBeneficiarios = () => {
             document.getElementById('dtAdmissaoEtiqueta').style.display = 'none';
         }
         function exibirEmail(){
-            document.getElementById('emailBeneficiario').style.display = 'flex';
-            document.getElementById('emailBeneficiarioEtiqueta').style.display = 'flex';
+            document.getElementById('emailBeneficiario').style.display = 'inline-block';
+            document.getElementById('emailBeneficiarioEtiqueta').style.display = 'inline-block';
         }
         function esconderEmail(){
             document.getElementById('emailBeneficiario').style.display = 'none';
             document.getElementById('emailBeneficiarioEtiqueta').style.display = 'none';
         }
         function exibirEndereco(){
-            document.getElementById('enderecoBeneficiario').style.display = 'flex';
-            document.getElementById('enderecoBeneficiarioEtiqueta').style.display = 'flex';
+            document.getElementById('enderecoBeneficiario').style.display = 'inline-block';
+            document.getElementById('enderecoBeneficiarioEtiqueta').style.display = 'inline-block';
         }
         function esconderEndereco(){
             document.getElementById('enderecoBeneficiario').style.display = 'none';
             document.getElementById('enderecoBeneficiarioEtiqueta').style.display = 'none';
         }
-        // function verificarEmailTrue(){
-        //     emailTrue ? setEmailTrue(true) : setEmailTrue(false);
-        //     if(emailTrue){
-        //         exibirEmail();
+        function exibirCpf(){
+            document.getElementById('cpfBeneficiario').style.display = 'inline-block';
+            document.getElementById('cpfBeneficiarioEtiqueta').style.display = 'inline-block';
+        }
+        function esconderCpf(){
+            document.getElementById('cpfBeneficiario').style.display = 'none';
+            document.getElementById('cpfBeneficiarioEtiqueta').style.display = 'none';
+        }
+        function verificarEmailTrue(){
+            if(emailTrue == "aparece"){
+                exibirEmail();
 
-        //     }else{
-        //         esconderEmail();
-        //     }
-        // }
-        // function verificarEnderecoTrue(){
-        //     enderecoTrue ? setEnderecoTrue(true) : setEnderecoTrue(false);
-        //     if(enderecoTrue){
-        //         exibirEndereco();
+            }
+        }
+        function verificarEnderecoTrue(){
+            if(enderecoTrue == "aparece"){
+                exibirEndereco();
+            }
 
-        //     }else{
-        //         esconderEndereco();
-        //     }
-        // }
+        }
 
         if(checkDental.checked){
             exibirNome();
             exibirPeso();
             exibirAltura();
+            exibirCpf();
 
         }else{
             esconderNome();
@@ -279,7 +301,7 @@ const AdicionarBeneficiarios = () => {
         
         if(checkSaudeMental.checked){
             exibirHoras();
-
+            exibirCpf();
             if(emailTrue){
                 document.getElementById('emailBeneficiario').style.width = '300px';
             }
@@ -300,32 +322,32 @@ const AdicionarBeneficiarios = () => {
         if(checkSaude.checked){
             exibirDtAdmissao();
             exibirNome();
-            // verificarEmailTrue();
-            // verificarEnderecoTrue();
+            verificarEmailTrue();
+            verificarEnderecoTrue();
+            exibirCpf();
 
         }else{
             esconderDtAdmissao();
-            // verificarEmailTrue();
-            // verificarEnderecoTrue();
+            esconderEmail();
+            esconderEndereco();
         }
 
     }
-
     function verificarCampos(){
+        if(nomeBeneficiario === ""){
+            setNomeBeneficiario("--");
+        }
         if(endereco === ""){
             setEndereco("--");
         }
         if(email === ""){
             setEmail("--");
         }
-        if(dtAdmissao === ""){
-            setDtAdmissao("--");
-        }
-        if(nomeBeneficiario === ""){
-            setNomeBeneficiario("--");
-        }
         if(peso === ""){
             setPeso("--");
+        }
+        if(dtAdmissao === ""){
+            setDtAdmissao("--");
         }
         if(altura === ""){
             setAltura("--");
@@ -345,6 +367,8 @@ const AdicionarBeneficiarios = () => {
         
     }
     setInterval(() => {
+        verificarCheckBox();
+
         verificarPlano();
         verificarPlanosSelecionados();
     }, 100);
@@ -353,12 +377,12 @@ const AdicionarBeneficiarios = () => {
         <ContainerGrid>
         <Header id="headerComponente"></Header>
         <Main>
-            <Box>
+            <Box id="boxPrincipal">
                 <TituloBox>Cadastramento de Beneficiário {nome}</TituloBox>
                 <Formulario  onSubmit={(e) => adicionarBeneficiario(e)}>
 
                     <BoxForm>
-                                <TituloCheck>Selecione pelo menos 1 plano</TituloCheck>
+                                <TituloCheck>Selecione pelo menos um plano </TituloCheck>
                         <BoxCheck>
                             <Input id="checkboxSaude" type="checkbox" onChange={(e) => setPlanoSaudeNome(e.target.value) } value={planoSaudeEmpresa} />
                             <Etiqueta for="checkboxSaude" id="checkboxSaudeEtiqueta" key={planoSaudeEmpresa}>{planoSaudeEmpresa}</Etiqueta>
@@ -375,7 +399,7 @@ const AdicionarBeneficiarios = () => {
                     <Input type="text" id="nomeBeneficiario" placeholder="Nome Completo" value={nomeBeneficiario} onChange={(e) => setNomeBeneficiario(e.target.value)}/>
 
                     <Etiqueta for="cpfBeneficiarios" id="cpfBeneficiarioEtiqueta">CPF</Etiqueta>
-                    <Input type="number" id="cpfBeneficiario" placeholder="CPF" required value={cpf} onChange={(e) => setCpf(e.target.value)}/>
+                    <Input type="number" id="cpfBeneficiario" placeholder="CPF" value={cpf} onChange={(e) => setCpf(e.target.value)}/>
 
                     <Etiqueta for="dtAdmissao" id="dtAdmissaoEtiqueta">Dt. Admissão</Etiqueta>
                     <Input type="date" id="dtAdmissao" placeholder="Data Admissão" value={dtAdmissao} onChange={(e) => setDtAdmissao(e.target.value)}/>
@@ -395,24 +419,8 @@ const AdicionarBeneficiarios = () => {
                     <Etiqueta for="enderecoBeneficiario" id="enderecoBeneficiarioEtiqueta">Endereço Completo</Etiqueta>
                     <Input type="text" id="enderecoBeneficiario" placeholder="Endereço Completo" value={endereco} onChange={(e) => setEndereco(e.target.value)} />
 
-                    {/* {dadosPlano.map(item => <>{item.emailIsTrue ? 
-                    <>
-                    <Etiqueta for="emailBeneficiario" id="emailBeneficiarioEtiqueta">E-mail</Etiqueta>
-                    <Input type="email" id="emailBeneficiario" placeholder="E-mail" required value={email} onChange={(e) => setEmail(e.target.value)} />
-                    </>
-                     : ""}</>)}      
-                    
-                    {dadosPlano.map(item => <p>{item.enderecoIsTrue  ? 
-                    <>
-                   <Etiqueta for="enderecoBeneficiario" id="enderecoBeneficiarioEtiqueta">Endereço Completo</Etiqueta>
-                    <Input type="text" id="enderecoBeneficiario" placeholder="Endereço Completo" required value={endereco} onChange={(e) => setEndereco(e.target.value)} />
-                    </>
-                     : ""}</p>)}       */}
-                   
-
-
                     <BoxForm>
-                        <BotaoSubmit type="submit" id="link-continuar" onClick={verificarCampos} >
+                        <BotaoSubmit type="submit" id="botaoAdicionar" onClick={verificarCampos}>
                             Adicionar Beneficiário
                         </BotaoSubmit>
                     </BoxForm>

@@ -3,14 +3,14 @@
     {
       "id": 1,
       "nomePlano": "Norte Europa",
-      "emailIsTrue": true,
-      "enderecoIsTrue": false
+      "emailIsTrue": "aparece",
+      "enderecoIsTrue": "naoAparece"
     },
     {
       "id": 2,
       "nomePlano": "Pampulha Intermédica",
-      "emailIsTrue": false,
-      "enderecoIsTrue": true
+      "emailIsTrue": "naoAparece",
+      "enderecoIsTrue": "aparece"
     }
   ],
   "planoDental": [
@@ -161,21 +161,6 @@
       "planoSaudeMentalNome": "--",
       "planoSaudeNome": "Norte Europa",
       "id": 6
-    },
-    {
-      "nome": "--",
-      "cpf": "18956235425",
-      "dtAdmissao": "--",
-      "email": "--",
-      "endereco": "--",
-      "peso": "--",
-      "altura": "--",
-      "horasMed": "2",
-      "nomeEmpresa": "Tio Patinhas Bank",
-      "planoDentalNome": "--",
-      "planoSaudeMentalNome": "Mente Sã, Corpo São",
-      "planoSaudeNome": "--",
-      "id": 7
     }
   ]
 }
