@@ -16,7 +16,6 @@ grid-area:main;
 display:flex;
 justify-content:center;
 
-
 `;
 export const Box = styled.div`
 width:900px;
@@ -34,11 +33,14 @@ align-items:center;
 
 }
 #emailBeneficiario{
-    width:300px;
+    max-width:450px;
+    min-width:350px;
+    width:auto;
 }
 #pesoBeneficiario, #alturaBeneficiario{
-    width:200px;
-    display:none;
+    min-width:250px;
+    max-width:300px;
+    width:auto;
 }
 #horasMeditadas{
     width:170px;
@@ -46,7 +48,9 @@ align-items:center;
 #checkboxSaude, #checkboxSaudeMental, #checkboxDental{
     width:20px;
 }
-
+`;
+export const BoxInput = styled.div`
+display:inline-block;
 `;
 export const TituloBox = styled.p`
 margin:5px;

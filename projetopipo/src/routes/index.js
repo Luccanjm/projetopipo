@@ -15,7 +15,6 @@ const Routes = () => (
             <Route path="/empresas/:id/:nome/:cnpj/:qtdPlanos/:planoDentalEmpresa/:planoSaudeEmpresa/:planoSaudeMentalEmpresa" component={Empresas} />
             <Route path="/beneficiarios/:id/:nome/:cpf/:dtAdmissao/:email/:endereco/:peso/:altura/:horasMed/:nomeEmpresa/:planoSaudeNome/:planoDentalNome/:planoSaudeMentalNome" component={Beneficiarios} />
             <Route path="/adicionar/:id/:nome/:cnpj/:qtdPlanos/:planoDentalEmpresa/:planoSaudeEmpresa/:planoSaudeMentalEmpresa" component={AdicionarBeneficiarios} />
-
         </Switch>
     </BrowserRouter>
 );

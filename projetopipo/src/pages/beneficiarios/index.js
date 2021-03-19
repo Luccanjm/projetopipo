@@ -35,10 +35,10 @@ const Beneficiarios = () => {
                     <li>CPF</li>
                     <li>Dt.Admissão</li>
                     <li>E-mail</li>
-                    <li>Endereço</li>
+                    <li className="enderecoClasse">Endereço</li>
                     <li>Peso(kg)</li>
                     <li>Altura(cm)</li>
-                    <li>Horas Meditadas últimos 7 dias</li>
+                    <li className="horasClasse" >Horas Meditadas últimos 7 dias</li>
 
                 </ul>
                 <ul>
@@ -46,10 +46,10 @@ const Beneficiarios = () => {
                         <li>{cpf}</li>
                         <li>{dtAdmissao}</li>
                         <li>{email}</li>
-                        <li>{endereco}</li>
+                        <li className="enderecoClasse">{endereco}</li>
                         <li>{peso}</li>
                         <li>{altura}</li>
-                        <li>{horasMed}</li>
+                        <li className="horasClasse">{horasMed}</li>
 
                     
                 </ul>

@@ -15,6 +15,7 @@ import {
         Table, 
         TableBeneficiarios
     } from './styles';
+import PaginacaoBeneficiarios from '../../componentes/paginacaoBeneficiarios';
 
 
 const Empresas = () => {
@@ -43,12 +44,12 @@ const Empresas = () => {
 
 
 
-    const { id, nome, cnpj, qtdPlanos, qtdBenef, planoDentalEmpresa,planoSaudeEmpresa, planoSaudeMentalEmpresa  } = useParams();
+    const { id, nome, cnpj, qtdPlanos, planoDentalEmpresa,planoSaudeEmpresa, planoSaudeMentalEmpresa  } = useParams();
 
     function Parametros(){
-        const params = useParams("/empresas/:id/:nome/:cnpj/:qtdPlanos/:qtdBenef/:planoDentalEmpresa/:planoSaudeEmpresa/:planoSaudeMentalEmpresa/")
+        const params = useParams("/empresas/:id/:nome/:cnpj/:qtdPlanos/:planoDentalEmpresa/:planoSaudeEmpresa/:planoSaudeMentalEmpresa/")
 
-        let { id, nome, cnpj, qtdPlanos, qtdBenef, planoDentalEmpresa,planoSaudeEmpresa, planoSaudeMentalEmpresa } = params;
+        let { id, nome, cnpj, qtdPlanos, planoDentalEmpresa,planoSaudeEmpresa, planoSaudeMentalEmpresa } = params;
         return <> </>
     }
 
@@ -63,13 +64,13 @@ const Empresas = () => {
                     <thead>
                         <th>Nome</th>
                         <th>CNPJ</th>
-                        <th>Qtd. Benefícios</th>
+                        <th className="qtdBenefClasse">Qtd. Benefícios</th>
                     </thead>
                     <tbody>
                         <tr>
                             <td>{nome}</td>
                             <td>{cnpj}</td>
-                            <td>{qtdPlanos}</td>
+                            <td className="qtdBenefClasse">{qtdPlanos}</td>
                         </tr>
                     </tbody>
                 </Table>
@@ -86,39 +87,8 @@ const Empresas = () => {
 
             <BoxBeneficiarios>
                 <TituloBeneficiarios>Beneficiários</TituloBeneficiarios>
-                <TableBeneficiarios>
 
-                    <thead>
-                        <tr>
-                            <th>Nome</th>
-                            <th>CPF</th>
-                            <th>Dt.Admissão</th>
-                            <th>E-mail</th>
-                            <th>Endereço</th>
-                            <th>Peso(kg)</th>
-                            <th>Altura(cm)</th>
-                            <th>Horas Meditadas últimos 7 dias</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        {beneficiarios.map((item) =>
-                            <tr onClick={() =>
-                                window.location.href = `/beneficiarios/${item.id}/${item.nome}/${item.cpf}/${item.dtAdmissao}/${item.email}/${item.endereco}/${item.peso}/${item.altura}/${item.horasMed}/${item.nomeEmpresa}/${item.planoDentalNome}/${item.planoSaudeNome}/${item.planoSaudeMentalNome}`}>
-                                <td key={item.nome}>{item.nome}</td>
-                                <td key={item.cpf}>{item.cpf}</td>
-                                <td key={item.dtAdmissao}>{item.dtAdmissao}</td>
-                                <td key={item.email}>{item.email}</td>
-                                <td key={item.endereco}>{item.endereco}</td>
-                                <td key={item.peso}>{item.peso}</td>
-                                <td key={item.altura}>{item.altura}</td>
-                                <td key={item.horasMed}>{item.horasMed}</td>
-                            </tr>
-                        )}
-                    </tbody>
-
-                </TableBeneficiarios>
-              
+              <PaginacaoBeneficiarios nome={nome}></PaginacaoBeneficiarios>
             </BoxBeneficiarios>
         </Main>
         <Footer id="footerComponente"></Footer>

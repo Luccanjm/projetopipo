@@ -19,7 +19,8 @@ import {
     TituloBox,
     BoxForm, 
     BoxCheck, 
-    TituloCheck 
+    TituloCheck,
+    BoxInput
 } from './styles';
 
 const AdicionarBeneficiarios = () => {
@@ -37,8 +38,6 @@ const AdicionarBeneficiarios = () => {
     const [planoSaudeNome, setPlanoSaudeNome] = useState('');
     const [erroMensagem, setErroMensagem] = useState('');
 
-    const [empresas, setEmpresas] = useState([]);
-
     const [planoSaude, setPlanoSaude] = useState([]);
     const [planoDental, setPlanoDental] = useState([]);
     const [planoSaudeMental, setPlanoSaudeMental] = useState([]);
@@ -48,6 +47,20 @@ const AdicionarBeneficiarios = () => {
     const [enderecoTrue, setEnderecoTrue] = useState('');
     const { id, nome, cnpj, qtdPlanos, planoDentalEmpresa,planoSaudeEmpresa, planoSaudeMentalEmpresa  } = useParams();
 
+    const [exibirElementoNome,setExibirElementoNome] = useState(false);
+    const [exibirElementoDt,setExibirElementoDt] = useState(false);
+    const [exibirElementoPeso, setExibirElementoPeso] = useState(false);
+    const [exibirElementoAltura, setExibirElementoAltura] = useState(false);
+    const [exibirElementoHoras, setExibirElementoHoras] = useState(false);
+    const [exibirElementoEmail, setExibirElementoEmail] = useState(false);
+    const [exibirElementoEndereco, setExibirElementoEndereco] = useState(false);
+    const [exibirElementoCpf, setExibirElementoCpf] = useState(false);
+
+    const [exibirCheckSaudeMental, setExibirCheckSaudeMental] = useState(false);
+    const [exibirCheckSaude, setExibirCheckSaude] = useState(false);
+    const [exibirCheckSaudeDental, setExibirCheckSaudeDental] = useState(false);
+
+    const [podeCriar, setPodeCriar] = useState(false);
 // --------------------------------------------------------------------------------------------------------------------------------------------------
     
     const buscarDadosPlanoSaude = useCallback(
@@ -133,226 +146,145 @@ const AdicionarBeneficiarios = () => {
                 planoSaudeNome: planoSaudeNome
 
             }
-         
-            
-        try {
-            
-            const resposta = await api.post('beneficiarios', parametros);
-            setNomeBeneficiario('');
-            setCpf('');
-            setDtAdmissao('');
-            setEmail('');
-            setEndereco('');
-            setPeso('');
-            setAltura('');
-            setHorasMed('');
-            setNomeEmpresa('');
-            setPlanoDentalNome('');
-            setPlanoSaudeMentalNome('');
-            setPlanoSaudeNome('');
-            console.log("Novo beneficiario adicionado com sucesso!");
-            swal("Sucesso", "Beneficiário adicionado com sucesso!", "success");
+            if(exibirElementoEmail && email === ""){
+                swal("Atenção", "Campo email é requerido, por favor preencha o campo para que possa adicionar o beneficiário.", "info");
+            }else if(exibirElementoNome && nomeBeneficiario === ""){
+                swal("Atenção", "Campo nome é requerido, por favor preencha o campo para que possa adicionar o beneficiário.", "info");
+            }else if(exibirElementoPeso && peso === ""){
+                swal("Atenção", "Campo peso é requerido, por favor preencha o campo para que possa adicionar o beneficiário.", "info");
+            }else if(exibirElementoAltura && altura === ""){
+                swal("Atenção", "Campo altura é requerido, por favor preencha o campo para que possa adicionar o beneficiário.", "info");
+            }else if(exibirElementoDt && dtAdmissao === ""){
+                swal("Atenção", "Campo data admissão é requerido, por favor preencha o campo para que possa adicionar o beneficiário.", "info");
+            }else if(exibirElementoEndereco && endereco === ""){
+                swal("Atenção", "Campo endereço é requerido, por favor preencha o campo para que possa adicionar o beneficiário.", "info");
+            }else if(exibirElementoHoras && horasMed === ""){
+                swal("Atenção", "Campo horas meditadas é requerido, por favor preencha o campo para que possa adicionar o beneficiário.", "info");
+            }else{
+                try {
+                    
+                    const resposta = await api.post('beneficiarios', parametros);
+                    setNomeBeneficiario('');
+                    setCpf('');
+                    setDtAdmissao('');
+                    setEmail('');
+                    setEndereco('');
+                    setPeso('');
+                    setAltura('');
+                    setHorasMed('');
+                    setNomeEmpresa('');
+                    setPlanoDentalNome('');
+                    setPlanoSaudeMentalNome('');
+                    setPlanoSaudeNome('');
+                    console.log("Novo beneficiario adicionado com sucesso!");
+                    swal("Sucesso", "Beneficiário adicionado com sucesso!", "success");
 
-            } catch (error) {
-                setErroMensagem('Erro na criação api(adicionarBeneficiarios)');
-                swal("Atenção", "Erro ao adicionar beneficiário!", "warning");
-                
+                    } catch (error) {
+                        setErroMensagem('Erro na criação api(adicionarBeneficiarios)');
+                        swal("Atenção", "Erro ao adicionar beneficiário!", "warning");
+                        
+                    }
             }
-  
+    
         }, [nomeBeneficiario, cpf, dtAdmissao, email, endereco, peso, altura, horasMed, nomeEmpresa,planoDentalNome,planoSaudeMentalNome,planoSaudeNome]
         
     )
+
+
+    
+
     function verificarCheckBox(){
         var checkDental = document.getElementById("checkboxDental");
         var checkSaudeMental = document.getElementById("checkboxSaudeMental");
         var checkSaude = document.getElementById("checkboxSaude");
 
-        if(!checkSaude.checked && !checkSaudeMental.checked && !checkDental.checked){
-            document.getElementById('boxPrincipal').style.height = '200px';
-            document.getElementById('botaoAdicionar').style.display = 'none';
-            document.getElementById('cpfBeneficiarioEtiqueta').style.display = 'none';
-            document.getElementById('cpfBeneficiario').style.display = 'none';
-
-        }
-        if(checkSaude.checked || checkSaudeMental.checked || checkDental.checked){
-            document.getElementById('boxPrincipal').style.height = '600px';
-            document.getElementById('botaoAdicionar').style.display = 'flex';
-
-        }
-    }
-
-    function verificarPlano(){
-        if(planoSaudeMentalEmpresa === "--"){
-            document.getElementById('horasMeditadas').style.display = 'none';
-            document.getElementById('horasMeditadasEtiqueta').style.display = 'none';
-            document.getElementById('alturaBeneficiario').style.width = '240px';
-            document.getElementById('pesoBeneficiario').style.width = '240px';
-            document.getElementById('checkboxSaudeMental').style.display = 'none';
-            document.getElementById('checkboxSaudeMentalEtiqueta').style.display = 'none';
-            setHorasMed('0')
-            setPlanoSaudeMentalNome("--");
-            if(dadosPlano.emailIsTrue){
-                document.getElementById('emailBeneficiario').style.width = '560px';
-
-            }
-        }
-        if(planoDentalEmpresa === "--"){
-            document.getElementById('checkboxDental').style.display = 'none';
-            document.getElementById('checkboxDentalEtiqueta').style.display = 'none';
-            setPlanoDentalNome("--")
-        }
-    }
-
-    function verificarPlanosSelecionados() {
-        var checkDental = document.getElementById("checkboxDental");
-        var checkSaudeMental = document.getElementById("checkboxSaudeMental");
-        var checkSaude = document.getElementById("checkboxSaude");
-
-        function exibirNome(){
-            document.getElementById('nomeBeneficiario').style.display = 'flex';
-            document.getElementById('nomeBeneficiarioEtiqueta').style.display = 'flex';
-        } 
-        function esconderNome(){
-            document.getElementById('nomeBeneficiario').style.display = 'none';
-            document.getElementById('nomeBeneficiarioEtiqueta').style.display = 'none';
-        }
-        function exibirPeso(){
-            document.getElementById('pesoBeneficiario').style.display = 'inline-block';
-            document.getElementById('pesoBeneficiarioEtiqueta').style.display = 'inline-block';
-        }
-        function esconderPeso(){
-            document.getElementById('pesoBeneficiario').style.display = 'none';
-            document.getElementById('pesoBeneficiarioEtiqueta').style.display = 'none';
-        }
-        function exibirAltura(){
-            document.getElementById('alturaBeneficiario').style.display = 'inline-block';
-            document.getElementById('alturaBeneficiarioEtiqueta').style.display = 'inline-block';
-        }
-        function esconderAltura(){
-            document.getElementById('alturaBeneficiario').style.display = 'none';
-            document.getElementById('alturaBeneficiarioEtiqueta').style.display = 'none';
-        }
-        function exibirHoras(){
-            document.getElementById('horasMeditadas').style.display = 'inline-block';
-            document.getElementById('horasMeditadasEtiqueta').style.display = 'inline-block';
-        }
-        function esconderHoras(){
-            document.getElementById('horasMeditadas').style.display = 'none';
-            document.getElementById('horasMeditadasEtiqueta').style.display = 'none';
-        }
-        function exibirDtAdmissao(){
-            document.getElementById('dtAdmissao').style.display = 'inline-block';
-            document.getElementById('dtAdmissaoEtiqueta').style.display = 'inline-block';
-        }
-        function esconderDtAdmissao(){
-            document.getElementById('dtAdmissao').style.display = 'none';
-            document.getElementById('dtAdmissaoEtiqueta').style.display = 'none';
-        }
-        function exibirEmail(){
-            document.getElementById('emailBeneficiario').style.display = 'inline-block';
-            document.getElementById('emailBeneficiarioEtiqueta').style.display = 'inline-block';
-        }
-        function esconderEmail(){
-            document.getElementById('emailBeneficiario').style.display = 'none';
-            document.getElementById('emailBeneficiarioEtiqueta').style.display = 'none';
-        }
-        function exibirEndereco(){
-            document.getElementById('enderecoBeneficiario').style.display = 'inline-block';
-            document.getElementById('enderecoBeneficiarioEtiqueta').style.display = 'inline-block';
-        }
-        function esconderEndereco(){
-            document.getElementById('enderecoBeneficiario').style.display = 'none';
-            document.getElementById('enderecoBeneficiarioEtiqueta').style.display = 'none';
-        }
-        function exibirCpf(){
-            document.getElementById('cpfBeneficiario').style.display = 'inline-block';
-            document.getElementById('cpfBeneficiarioEtiqueta').style.display = 'inline-block';
-        }
-        function esconderCpf(){
-            document.getElementById('cpfBeneficiario').style.display = 'none';
-            document.getElementById('cpfBeneficiarioEtiqueta').style.display = 'none';
-        }
         function verificarEmailTrue(){
             if(emailTrue == "aparece"){
-                exibirEmail();
-
+                setExibirElementoEmail(true);
             }
         }
         function verificarEnderecoTrue(){
             if(enderecoTrue == "aparece"){
-                exibirEndereco();
+                setExibirElementoEndereco(true);
             }
-
         }
-
-        if(checkDental.checked){
-            exibirNome();
-            exibirPeso();
-            exibirAltura();
-            exibirCpf();
+      
+        if(planoSaudeEmpresa === "--"){
+            if(!checkDental.checked && !checkSaudeMental.checked){
+                setExibirElementoNome(false);
+                setExibirElementoCpf(false);
+            }
+        }else{
+            setExibirCheckSaude(true);
+            if(checkSaude.checked){
+                setExibirElementoNome(true);
+                setExibirElementoDt(true);
+                setExibirElementoCpf(true);
+                verificarEmailTrue();
+                verificarEnderecoTrue();
+            }else if(!checkSaude.checked && !checkDental.checked){
+                setExibirElementoNome(false);
+                setExibirElementoDt(false);
+                setExibirElementoEmail(false);
+                setExibirElementoEndereco(false);
+            }else if(!checkSaude.checked && !checkSaudeMental.checked && !checkDental.checked ){
+                setExibirElementoCpf(false);
+            }
+        }
+        if(planoDentalEmpresa === "--"){
 
         }else{
-            esconderNome();
-            esconderPeso();
-            esconderAltura();
-
-
-        }
-        
-        if(checkSaudeMental.checked){
-            exibirHoras();
-            exibirCpf();
-            if(emailTrue){
-                document.getElementById('emailBeneficiario').style.width = '300px';
-            }
+            setExibirCheckSaudeDental(true);
+            if(checkDental.checked){
+                setExibirElementoCpf(true);
+                setExibirElementoNome(true);
+                setExibirElementoPeso(true);
+                setExibirElementoAltura(true);
+    
             }else{
-            esconderHoras();
-
-            if(emailTrue){
-                document.getElementById('emailBeneficiario').style.width = '560px';
+                setExibirElementoPeso(false);
+                setExibirElementoAltura(false);
             }
-            setPlanoSaudeMentalNome("--");
-            setHorasMed("0");
         }
-        if(checkDental.checked && !checkSaudeMental.checked){
-            document.getElementById('alturaBeneficiario').style.width = '240px';
-            document.getElementById('pesoBeneficiario').style.width = '240px';
-            
-        }
-        if(checkSaude.checked){
-            exibirDtAdmissao();
-            exibirNome();
-            verificarEmailTrue();
-            verificarEnderecoTrue();
-            exibirCpf();
+        if(planoSaudeMentalEmpresa === "--"){
 
         }else{
-            esconderDtAdmissao();
-            esconderEmail();
-            esconderEndereco();
+            setExibirCheckSaudeMental(true);
+            if(checkSaudeMental.checked){
+                setExibirElementoCpf(true);
+                setExibirElementoHoras(true);
+            }else{
+                setExibirElementoHoras(false);
+            }
         }
 
     }
+
+    setInterval(() => {
+        verificarCheckBox();
+
+    }, 100);
+
     function verificarCampos(){
-        if(nomeBeneficiario === ""){
+        if(nomeBeneficiario === "" && !exibirElementoNome){
             setNomeBeneficiario("--");
         }
-        if(endereco === ""){
+        if(endereco === "" && !exibirElementoEndereco){
             setEndereco("--");
         }
-        if(email === ""){
+        if(email === "" && !exibirElementoEmail){
             setEmail("--");
         }
-        if(peso === ""){
+        if(peso === "" && !exibirElementoPeso){
             setPeso("--");
         }
-        if(dtAdmissao === ""){
+        if(dtAdmissao === "" && !exibirElementoDt){
             setDtAdmissao("--");
         }
-        if(altura === ""){
+        if(altura === "" && !exibirElementoAltura){
             setAltura("--");
         }
-        if(horasMed === ""){
+        if(horasMed === "" && !exibirElementoHoras){
             setHorasMed("--");
         }
         if(planoSaudeNome === ""){
@@ -364,15 +296,8 @@ const AdicionarBeneficiarios = () => {
         if(planoSaudeMentalNome === ""){
             setPlanoSaudeMentalNome("--");
         }
-        
     }
-    setInterval(() => {
-        verificarCheckBox();
-
-        verificarPlano();
-        verificarPlanosSelecionados();
-    }, 100);
-
+    
     return(
         <ContainerGrid>
         <Header id="headerComponente"></Header>
@@ -382,45 +307,124 @@ const AdicionarBeneficiarios = () => {
                 <Formulario  onSubmit={(e) => adicionarBeneficiario(e)}>
 
                     <BoxForm>
-                                <TituloCheck>Selecione pelo menos um plano </TituloCheck>
+                        <TituloCheck>Selecione pelo menos um plano </TituloCheck>
                         <BoxCheck>
-                            <Input id="checkboxSaude" type="checkbox" onChange={(e) => setPlanoSaudeNome(e.target.value) } value={planoSaudeEmpresa} />
-                            <Etiqueta for="checkboxSaude" id="checkboxSaudeEtiqueta" key={planoSaudeEmpresa}>{planoSaudeEmpresa}</Etiqueta>
+                            
+                            {exibirCheckSaude ?
+                                <>
+                                    <Input id="checkboxSaude" type="checkbox" onChange={(e) => setPlanoSaudeNome(e.target.value) } value={planoSaudeEmpresa} />
+                                    <Etiqueta for="checkboxSaude" id="checkboxSaudeEtiqueta" key={planoSaudeEmpresa}>{planoSaudeEmpresa}</Etiqueta>
+                                </>
+                                :
+                                <>
+                                    <Input id="checkboxSaude" type="checkbox" disabled onChange={(e) => setPlanoSaudeNome(e.target.value) } value={planoSaudeEmpresa} />
+                                    <Etiqueta for="checkboxSaude" id="checkboxSaudeEtiqueta" key={planoSaudeEmpresa}>{planoSaudeEmpresa}</Etiqueta>
+                                </>
+                            }
 
-                            <Input id="checkboxDental" type="checkbox" onChange={(e) => setPlanoDentalNome(e.target.value) } value={planoDentalEmpresa} />
-                            <Etiqueta for="checkboxDental" id="checkboxDentalEtiqueta" key={planoDentalEmpresa}>{planoDentalEmpresa}</Etiqueta>
-
-                            <Input id="checkboxSaudeMental" type="checkbox" onChange={(e) => setPlanoSaudeMentalNome(e.target.value) } value={planoSaudeMentalEmpresa} />
-                            <Etiqueta for="checkboxSaudeMental" id="checkboxSaudeMentalEtiqueta" key={planoSaudeMentalEmpresa}>{planoSaudeMentalEmpresa}</Etiqueta>
+                            {exibirCheckSaudeDental ?
+                                <>
+                                    <Input id="checkboxDental" type="checkbox" onChange={(e) => setPlanoDentalNome(e.target.value) } value={planoDentalEmpresa} />
+                                    <Etiqueta for="checkboxDental" id="checkboxDentalEtiqueta" key={planoDentalEmpresa}>{planoDentalEmpresa}</Etiqueta>
+                                </> 
+                                :
+                                  <>
+                                    <Input id="checkboxDental" type="checkbox" disabled onChange={(e) => setPlanoDentalNome(e.target.value) } value={planoDentalEmpresa} />
+                                    <Etiqueta for="checkboxDental" id="checkboxDentalEtiqueta" key={planoDentalEmpresa}>{planoDentalEmpresa}</Etiqueta>
+                                 </>
+                            }
+                            
+                            {exibirCheckSaudeMental ?
+                                <>
+                                    <Input id="checkboxSaudeMental" type="checkbox" onChange={(e) => setPlanoSaudeMentalNome(e.target.value) } value={planoSaudeMentalEmpresa} />
+                                    <Etiqueta for="checkboxSaudeMental" id="checkboxSaudeMentalEtiqueta" key={planoSaudeMentalEmpresa}>{planoSaudeMentalEmpresa}</Etiqueta>
+                                </> 
+                                :
+                                  <>
+                                  <Input id="checkboxSaudeMental" type="checkbox" disabled onChange={(e) => setPlanoSaudeMentalNome(e.target.value) } value={planoSaudeMentalEmpresa} />
+                                  <Etiqueta for="checkboxSaudeMental" id="checkboxSaudeMentalEtiqueta" key={planoSaudeMentalEmpresa}>{planoSaudeMentalEmpresa}</Etiqueta>
+                              </>
+                            }
+                            
                         </BoxCheck> 
                     </BoxForm>
 
-                    <Etiqueta for="nomeBeneficiario" id="nomeBeneficiarioEtiqueta">Nome Completo</Etiqueta>
-                    <Input type="text" id="nomeBeneficiario" placeholder="Nome Completo" value={nomeBeneficiario} onChange={(e) => setNomeBeneficiario(e.target.value)}/>
+                    <BoxInput>
+                        {exibirElementoNome &&
+                            <>
+                                <Etiqueta for="nomeBeneficiario" id="nomeBeneficiarioEtiqueta">Nome Completo</Etiqueta>
+                                <Input type="text" id="nomeBeneficiario" placeholder="Nome Completo" value={nomeBeneficiario} onChange={(e) => setNomeBeneficiario(e.target.value)}/>
+                            </>
+                        
+                        }
+                    </BoxInput>
 
-                    <Etiqueta for="cpfBeneficiarios" id="cpfBeneficiarioEtiqueta">CPF</Etiqueta>
-                    <Input type="number" id="cpfBeneficiario" placeholder="CPF" value={cpf} onChange={(e) => setCpf(e.target.value)}/>
+                    <BoxInput>
+                        {exibirElementoCpf &&
+                            <>
+                                <Etiqueta for="cpfBeneficiarios" id="cpfBeneficiarioEtiqueta">CPF</Etiqueta>
+                                <Input type="number" id="cpfBeneficiario" placeholder="CPF" value={cpf} onChange={(e) => setCpf(e.target.value)}/>
+                            </>
+                        }
+                    </BoxInput>
 
-                    <Etiqueta for="dtAdmissao" id="dtAdmissaoEtiqueta">Dt. Admissão</Etiqueta>
-                    <Input type="date" id="dtAdmissao" placeholder="Data Admissão" value={dtAdmissao} onChange={(e) => setDtAdmissao(e.target.value)}/>
+                    <BoxInput>
+                        {exibirElementoDt &&
+                            <>
+                                <Etiqueta for="dtAdmissao" id="dtAdmissaoEtiqueta">Dt. Admissão</Etiqueta>
+                                <Input type="date" id="dtAdmissao" placeholder="Data Admissão" value={dtAdmissao} onChange={(e) => setDtAdmissao(e.target.value)}/>
+                            </>
+                        }
+                    </BoxInput>
 
-                    <Etiqueta for="pesoBeneficiario" id="pesoBeneficiarioEtiqueta">Peso (kg)</Etiqueta>
-                    <Input type="number" id="pesoBeneficiario" placeholder="Peso (kg)" value={peso} onChange={(e) => setPeso(e.target.value)}/>
+                    <BoxInput>
+                        {exibirElementoPeso &&
+                            <>
+                                <Etiqueta for="pesoBeneficiario" id="pesoBeneficiarioEtiqueta">Peso (kg)</Etiqueta>
+                                <Input type="number" id="pesoBeneficiario" placeholder="Peso (kg)" value={peso} onChange={(e) => setPeso(e.target.value)}/>
+                            </>
+                        }
+                    </BoxInput>
 
-                    <Etiqueta for="alturaBeneficiario" id="alturaBeneficiarioEtiqueta">Altura (cm)</Etiqueta>
-                    <Input type="number" id="alturaBeneficiario" placeholder="Altura (cm)" value={altura} onChange={(e) => setAltura(e.target.value)}/>
+                    <BoxInput>
+                        {exibirElementoAltura &&
+                            <>
+                                <Etiqueta for="alturaBeneficiario" id="alturaBeneficiarioEtiqueta">Altura (cm)</Etiqueta>
+                                <Input type="number" id="alturaBeneficiario" placeholder="Altura (cm)" value={altura} onChange={(e) => setAltura(e.target.value)}/>
+                            </>
+                        }
+                    </BoxInput>
 
-                    <Etiqueta for="horasMed" id="horasMeditadasEtiqueta">Horas Meditadas</Etiqueta>
-                    <Input type="text" id="horasMeditadas" placeholder="Horas Meditadas" value={horasMed} onChange={(e) => setHorasMed(e.target.value)} />
+                    <BoxInput>
+                    {exibirElementoHoras &&
+                        <>  
+                            <Etiqueta for="horasMed" id="horasMeditadasEtiqueta">Horas Meditadas</Etiqueta>
+                            <Input type="text" id="horasMeditadas" placeholder="Horas Meditadas" value={horasMed} onChange={(e) => setHorasMed(e.target.value)} />
+                        </>
+                    }
+                    </BoxInput>
 
-                    <Etiqueta for="emailBeneficiario" id="emailBeneficiarioEtiqueta">E-mail</Etiqueta>
-                    <Input type="text" id="emailBeneficiario" placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <BoxInput>
+                    {exibirElementoEmail &&
+                        <>
+                            <Etiqueta for="emailBeneficiario" id="emailBeneficiarioEtiqueta">E-mail</Etiqueta>
+                            <Input type="text" id="emailBeneficiario" placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)} />
+                        </>
+                    }
+                    </BoxInput>
 
-                    <Etiqueta for="enderecoBeneficiario" id="enderecoBeneficiarioEtiqueta">Endereço Completo</Etiqueta>
-                    <Input type="text" id="enderecoBeneficiario" placeholder="Endereço Completo" value={endereco} onChange={(e) => setEndereco(e.target.value)} />
+                    <BoxInput>
+                    {exibirElementoEndereco &&
+                        <>
+                            <Etiqueta for="enderecoBeneficiario" id="enderecoBeneficiarioEtiqueta">Endereço Completo</Etiqueta>
+                            <Input type="text" id="enderecoBeneficiario" placeholder="Endereço Completo" value={endereco} onChange={(e) => setEndereco(e.target.value)} />
+                        </>
+                    }
+                    </BoxInput>
+                    
 
                     <BoxForm>
-                        <BotaoSubmit type="submit" id="botaoAdicionar" onClick={verificarCampos}>
+                        <BotaoSubmit type="submit" id="botaoAdicionar" onClick={verificarCampos} >
                             Adicionar Beneficiário
                         </BotaoSubmit>
                     </BoxForm>

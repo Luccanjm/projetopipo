@@ -2,7 +2,7 @@ import React from 'react';
 import {ContainerGrid, Main, BoxTitulo, Titulo } from './styles';
 import Header from '../../componentes/header';
 import Footer from '../../componentes/footer';
-import MostrarEmpresas from '../../componentes/mostrarEmpresas';
+import PaginacaoEmpresas from '../../componentes/paginacaoEmpresas';
 
 const Dashboard = () => {
 
@@ -15,8 +15,9 @@ const Dashboard = () => {
                 <BoxTitulo>
                     <Titulo>Empresas</Titulo>
                 </BoxTitulo>
+                
+                <PaginacaoEmpresas id="PaginacaoEmpresas"></PaginacaoEmpresas>
 
-                <MostrarEmpresas id="mostrarEmpresasComponente"></MostrarEmpresas>
             </Main>
 
             <Footer id="footerComponente"></Footer>

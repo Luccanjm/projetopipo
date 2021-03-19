@@ -1,6 +1,5 @@
 import React from 'react';
-import {Head, BoxImg, Img} from './styles';
-import {Nav} from 'react-bootstrap';
+import {Head, BoxImg, Img, Nav} from './styles';
 import logoPipo from '../../assets/piposaude.png';
 
 const Header = () => {
