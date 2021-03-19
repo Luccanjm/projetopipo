@@ -146,7 +146,9 @@ const AdicionarBeneficiarios = () => {
                 planoSaudeNome: planoSaudeNome
 
             }
-            if(exibirElementoEmail && email === ""){
+            if(exibirElementoCpf && cpf === ""){
+                swal("Atenção", "Campo CPF é requerido, por favor preencha o campo para que possa adicionar o beneficiário.", "info");
+            }else if(exibirElementoEmail && email === ""){
                 swal("Atenção", "Campo email é requerido, por favor preencha o campo para que possa adicionar o beneficiário.", "info");
             }else if(exibirElementoNome && nomeBeneficiario === ""){
                 swal("Atenção", "Campo nome é requerido, por favor preencha o campo para que possa adicionar o beneficiário.", "info");
