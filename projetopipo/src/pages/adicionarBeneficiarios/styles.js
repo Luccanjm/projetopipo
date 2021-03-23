@@ -19,7 +19,7 @@ justify-content:center;
 `;
 export const Box = styled.div`
 width:900px;
-height:600px;
+min-height:auto;
 border-radius:10px;
 background:#040023;
 display:flex;
@@ -34,7 +34,7 @@ align-items:center;
 }
 #emailBeneficiario{
     max-width:450px;
-    min-width:350px;
+    min-width:335px;
     width:auto;
 }
 #pesoBeneficiario, #alturaBeneficiario{
@@ -79,7 +79,6 @@ display:flex;
 flex-direction:column;
 align-items:center;
 gap:10px;
-
 
 `;
 export const BoxCheck = styled.div`
