@@ -36,6 +36,8 @@ $ yarn add
 
 # Execute a API
 $ json-server --watch db.json
+# OU
+$ npm run api
 
 # A api deve inciar na porta:3000
 # Necessário inicializar o json-server na porta 3000, ou alterar a porta da API em projetopipo\src\services\api.js
