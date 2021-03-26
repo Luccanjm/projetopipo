@@ -19,12 +19,13 @@ justify-content:center;
 `;
 export const Box = styled.div`
 width:900px;
-min-height:auto;
 border-radius:10px;
 background:#040023;
 display:flex;
 flex-direction:column;
 align-items:center;
+height:fit-content;
+padding:30px;
 
 
 #nomeBeneficiario, #enderecoBeneficiario{
@@ -53,8 +54,7 @@ export const BoxInput = styled.div`
 display:inline-block;
 `;
 export const TituloBox = styled.p`
-margin:5px;
-padding:10px;
+margin-bottom:5px;
 font-size:30px;
 color:#FF9996;
 `;
@@ -80,7 +80,11 @@ flex-direction:column;
 align-items:center;
 gap:10px;
 
+button:hover{
+    opacity:0.7;
+}
 `;
+
 export const BoxCheck = styled.div`
 display:flex;
 align-items:center;
@@ -98,4 +102,6 @@ border-radius:5px;
 padding:15px;
 background:#B2FFB6;
 color:#1D1841;
+width:230px;
+height:45px;
 `;

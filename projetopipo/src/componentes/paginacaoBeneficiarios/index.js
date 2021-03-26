@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import api from '../../services/api';
 import {Container, Table} from './styles';
+import Header from '../header';
+import Footer from '../footer';
 import ReactPaginate from 'react-paginate';
 
 
@@ -55,7 +57,6 @@ class PaginacaoBeneficiarios extends Component {
 
                 this.setState({
                     pageCount: Math.ceil(data.length / this.state.perPage),
-                   
                     postData
                 })
             });

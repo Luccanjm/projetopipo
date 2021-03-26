@@ -5,7 +5,7 @@ const Footer = () => {
 
     return(
         <Creditos>
-            <TextoCreditos>&copy; Desenvolvido por Lucca Martinelli | 2021</TextoCreditos>
+            <TextoCreditos>Copyright 2021 &copy; Desenvolvido por Lucca Martinelli</TextoCreditos>
         </Creditos>
     )
 } 

@@ -68,6 +68,7 @@ const AdicionarBeneficiarios = () => {
         },[dadosPlano]
     );
     useEffect(() => {
+
         buscarDadosPlanoSaude();
     },[buscarDadosPlanoSaude])
 
@@ -89,27 +90,44 @@ const AdicionarBeneficiarios = () => {
                 planoSaudeMentalNome: formData.planoSaudeMentalNome,
                 planoSaudeNome: formData.planoSaudeNome
                 }
-                if((isCheckedDental || isCheckedSaude || isCheckedSaudeMental) && (formData.cpf === "--" || formData.cpf === "")){
+                        
+                if((isCheckedDental || isCheckedSaude || isCheckedSaudeMental) && (formData.cpf == "--" || formData.cpf == "")){
                     swal("Atenção", "Campo CPF é requerido, por favor preencha o campo para que possa adicionar o beneficiário.", "info");
-                }else if(isCheckedSaude && emailTrue == "aparece" && (formData.email === "--" || formData.email === "")){
+                }else if(isCheckedSaude && emailTrue == "aparece" && (formData.email == "--" || formData.email == "")){
                     swal("Atenção", "Campo email é requerido, por favor preencha o campo para que possa adicionar o beneficiário.", "info");
-                }else if(isCheckedSaude && enderecoTrue == "aparece" && (formData.endereco === "--" || formData.endereco === "")){
+                }else if(isCheckedSaude && enderecoTrue == "aparece" && (formData.endereco == "--" || formData.endereco == "")){
                     swal("Atenção", "Campo endereço é requerido, por favor preencha o campo para que possa adicionar o beneficiário.", "info");
-                }else if((isCheckedSaude || isCheckedDental) && (formData.nome === "--" || formData.nome === "")){
+                }else if((isCheckedSaude || isCheckedDental) && (formData.nome == "--" || formData.nome == "")){
                     swal("Atenção", "Campo nome é requerido, por favor preencha o campo para que possa adicionar o beneficiário.", "info");
-                }else if(isCheckedDental && (formData.peso === "--" || formData.peso === "")){
+                }else if(isCheckedDental && (formData.peso == "--" || formData.peso == "")){
                     swal("Atenção", "Campo peso é requerido, por favor preencha o campo para que possa adicionar o beneficiário.", "info");
-                }else if(isCheckedDental && (formData.altura === "--" || formData.altura === "")){
+                }else if(isCheckedDental && (formData.altura == "--" || formData.altura == "")){
                     swal("Atenção", "Campo altura é requerido, por favor preencha o campo para que possa adicionar o beneficiário.", "info");
-                }else if(isCheckedSaude && (formData.dtAdmissao === "--" || formData.dtAdmissao === "")){
+                }else if(isCheckedSaude && (formData.dtAdmissao == "--" || formData.dtAdmissao == "")){
                     swal("Atenção", "Campo data admissão é requerido, por favor preencha o campo para que possa adicionar o beneficiário.", "info");
-                }else if(isCheckedSaudeMental && (formData.horasMed === "--" || formData.horasMed === "")){
+                }else if(isCheckedSaudeMental && (formData.horasMed == "--" || formData.horasMed == "")){
                     swal("Atenção", "Campo horas meditadas é requerido, por favor preencha o campo para que possa adicionar o beneficiário.", "info");
                 }else{
                     try {
                         
                         const resposta = await api.post('beneficiarios', parametros);
-                        setFormData('');
+                        setFormData({
+                            nome: "--",
+                            cpf: "--",
+                            dtAdmissao: "--",
+                            email: "--",
+                            endereco: "--",
+                            peso: "--",
+                            altura: "--",
+                            horasMed: "--",
+                            nomeEmpresa: nome,
+                            planoDentalNome: "--",
+                            planoSaudeMentalNome: "--",
+                            planoSaudeNome: "--"
+                        });
+                        setCheckedSaude(false);
+                        setCheckedSaudeMental(false);
+                        setCheckedDental(false);
                         console.log("Novo beneficiario adicionado com sucesso!");
                         swal("Sucesso", "Beneficiário adicionado com sucesso!", "success");
 
@@ -136,7 +154,6 @@ const AdicionarBeneficiarios = () => {
         
     )
 
-    
     return(
         <ContainerGrid>
         <Header id="headerComponente"></Header>
@@ -154,7 +171,7 @@ const AdicionarBeneficiarios = () => {
                                     <Input id="checkboxSaude" type="checkbox" disabled />
                                     <Etiqueta for="checkboxSaude" id="checkboxSaudeEtiqueta" key={planoSaudeEmpresa}>{planoSaudeEmpresa}</Etiqueta>
                                 </>
-                            :
+                            : 
                                 <>
                                     <Input id="checkboxSaude" type="checkbox" onChange={(e) => {
                                     const { value } = e.target;
@@ -162,7 +179,7 @@ const AdicionarBeneficiarios = () => {
                                         ...formData,
                                         planoSaudeNome: value
                                     });
-                                    }} onClick={(e) => setCheckedSaude(e.target.checked)} value={planoSaudeEmpresa}/>
+                                    }} onClick={(e) => setCheckedSaude(e.target.checked)} value={planoSaudeEmpresa} />
                                     <Etiqueta for="checkboxSaude" id="checkboxSaudeEtiqueta" key={planoSaudeEmpresa}>{planoSaudeEmpresa}</Etiqueta>
                                 </>
                             }
@@ -210,9 +227,8 @@ const AdicionarBeneficiarios = () => {
                         </BoxCheck> 
                     </BoxForm>
 
-                    <BoxInput>
                         {(isCheckedSaude || isCheckedDental) &&
-                            <>
+                            <BoxInput>
                                 <Etiqueta for="nomeBeneficiario" id="nomeBeneficiarioEtiqueta">Nome Completo</Etiqueta>
                                 <Input type="text" id="nomeBeneficiario" placeholder="Nome Completo" onChange={(e) => {
                                         const { value } = e.target;
@@ -221,13 +237,11 @@ const AdicionarBeneficiarios = () => {
                                             nome: value
                                         });
                                 }}/>
-                            </>
+                            </BoxInput>
                         }       
-                    </BoxInput>
 
-                    <BoxInput>
                         {(isCheckedSaude || isCheckedDental || isCheckedSaudeMental) &&
-                            <>
+                            <BoxInput>
                                 <Etiqueta for="cpfBeneficiarios" id="cpfBeneficiarioEtiqueta">CPF</Etiqueta>
                                 <Input type="text" maxLength="11" minLength="11" id="cpfBeneficiario" placeholder="CPF" onChange={(e) => {
                                     const { value } = e.target;
@@ -236,13 +250,11 @@ const AdicionarBeneficiarios = () => {
                                         cpf: value
                                     });
                                 }}/>
-                            </>
+                            </BoxInput>
                         }
-                    </BoxInput>
 
-                    <BoxInput>
                         {isCheckedSaude &&
-                            <>
+                            <BoxInput>
                                 <Etiqueta for="dtAdmissao" id="dtAdmissaoEtiqueta">Dt. Admissão</Etiqueta>
                                 <Input type="date" id="dtAdmissao" placeholder="Data Admissão" onChange={(e) => {
                                     const { value } = e.target;
@@ -251,84 +263,70 @@ const AdicionarBeneficiarios = () => {
                                         dtAdmissao: value
                                     });
                                 }}/>
-                            </>
+                            </BoxInput>
+                   
                         }
-                    </BoxInput>
 
-                    <BoxInput>
                         { isCheckedDental &&
-                            <>
+                            <BoxInput>
                                 <Etiqueta for="pesoBeneficiario" id="pesoBeneficiarioEtiqueta">Peso (kg)</Etiqueta>
-                                <Input type="number" id="pesoBeneficiario" placeholder="Peso (kg)"  onChange={(e) => {
+                                <Input type="number" id="pesoBeneficiario" placeholder="Peso (kg)" onChange={(e) => {
                                     const { value } = e.target;
                                     setFormData({
                                         ...formData,
                                         peso: value
                                     });
                                 }}/>
-                            </>
-                        }
-                    </BoxInput>
-
-                    <BoxInput>
-                        { isCheckedDental &&
-                            <>
                                 <Etiqueta for="alturaBeneficiario" id="alturaBeneficiarioEtiqueta">Altura (cm)</Etiqueta>
-                                <Input type="number" id="alturaBeneficiario" placeholder="Altura (cm)"  onChange={(e) => {
+                                <Input type="number" id="alturaBeneficiario" placeholder="Altura (cm)" onChange={(e) => {
                                     const { value } = e.target;
                                     setFormData({
                                         ...formData,
                                         altura: value
                                     });
                                 }}/>
-                            </>
+                            </BoxInput>
                         }
-                    </BoxInput>
 
-                    <BoxInput>
+
                         { isCheckedSaudeMental &&
-                            <>
+                            <BoxInput>
                                 <Etiqueta for="horasMed" id="horasMeditadasEtiqueta">Horas Meditadas</Etiqueta>
-                                <Input type="text" id="horasMeditadas" placeholder="Horas Meditadas"  onChange={(e) => {
+                                <Input type="text" id="horasMeditadas" placeholder="Horas Meditadas" onChange={(e) => {
                                         const { value } = e.target;
                                         setFormData({
                                             ...formData,
                                             horasMed: value
                                         });
                                 }} />
-                            </>
+                            </BoxInput>
                         }
-                    </BoxInput>
 
-                    <BoxInput>
                         {(isCheckedSaude && (emailTrue == "aparece")) &&
-                            <>
+                            <BoxInput>
                                 <Etiqueta for="emailBeneficiario" id="emailBeneficiarioEtiqueta">E-mail</Etiqueta>
-                                <Input type="email" id="emailBeneficiario" placeholder="E-mail"  onChange={(e) => {
+                                <Input type="email" id="emailBeneficiario" placeholder="E-mail" onChange={(e) => {
                                         const { value } = e.target;
                                         setFormData({
                                             ...formData,
                                             email: value
                                         });
                                 }} />
-                            </>
+                            </BoxInput>
                         }
-                    </BoxInput>
 
-                    <BoxInput>
                         {(isCheckedSaude && (enderecoTrue == "aparece")) &&
-                            <>
+                            <BoxInput>
                                 <Etiqueta for="enderecoBeneficiario" id="enderecoBeneficiarioEtiqueta">Endereço Completo</Etiqueta>
-                                <Input type="text" id="enderecoBeneficiario" placeholder="Endereço Completo"  onChange={(e) => {
+                                <Input type="text" id="enderecoBeneficiario" placeholder="Endereço Completo" onChange={(e) => {
                                         const { value } = e.target;
                                         setFormData({
                                             ...formData,
                                             endereco: value
                                         });
                                 }} />
-                            </>
+                            </BoxInput>
                         }
-                    </BoxInput>
                     
 
                     <BoxForm>

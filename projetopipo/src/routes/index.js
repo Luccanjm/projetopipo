@@ -6,7 +6,6 @@ import Beneficiarios from '../pages/beneficiarios';
 import Empresas from '../pages/empresas';
 import AdicionarBeneficiarios from '../pages/adicionarBeneficiarios';
 
-
 const Routes = () => (
     <BrowserRouter>
         <Switch>

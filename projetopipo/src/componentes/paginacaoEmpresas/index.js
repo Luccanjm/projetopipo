@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import api from '../../services/api';
 import {Container, Table, BotaoRedirecionar, LinkBotao} from './styles';
+import Header from '../header';
+import Footer from '../footer';
 import ReactPaginate from 'react-paginate';
 
 class PaginacaoEmpresas extends Component {
