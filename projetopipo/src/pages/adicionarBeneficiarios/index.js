@@ -35,7 +35,6 @@ const AdicionarBeneficiarios = () => {
     const [isCheckedSaude, setCheckedSaude] = useState(false);
     const [isCheckedDental, setCheckedDental] = useState(false);
     const [isCheckedSaudeMental, setCheckedSaudeMental] = useState(false);
-
     const [formData, setFormData] = useState({
         nome: "--",
         cpf: "--",
@@ -123,7 +122,7 @@ const AdicionarBeneficiarios = () => {
                             nomeEmpresa: nome,
                             planoDentalNome: "--",
                             planoSaudeMentalNome: "--",
-                            planoSaudeNome: "--"
+                            planoSaudeNome: "--",
                         });
                         setCheckedSaude(false);
                         setCheckedSaudeMental(false);
@@ -179,7 +178,7 @@ const AdicionarBeneficiarios = () => {
                                         ...formData,
                                         planoSaudeNome: value
                                     });
-                                    }} onClick={(e) => setCheckedSaude(e.target.checked)} value={planoSaudeEmpresa} />
+                                    }} onClick={(e) => setCheckedSaude(e.target.checked)} value={planoSaudeEmpresa} checked={isCheckedSaude}/>
                                     <Etiqueta for="checkboxSaude" id="checkboxSaudeEtiqueta" key={planoSaudeEmpresa}>{planoSaudeEmpresa}</Etiqueta>
                                 </>
                             }
@@ -197,7 +196,7 @@ const AdicionarBeneficiarios = () => {
                                             ...formData,
                                             planoDentalNome: value
                                         });
-                                     }} onClick={(e) => setCheckedDental(e.target.checked)} value={planoDentalEmpresa}/>
+                                     }} onClick={(e) => setCheckedDental(e.target.checked)} value={planoDentalEmpresa} checked={isCheckedDental}/>
                                     <Etiqueta for="checkboxDental" id="checkboxDentalEtiqueta" key={planoDentalEmpresa}>{planoDentalEmpresa}</Etiqueta>
                                 </>
                             }
@@ -216,7 +215,7 @@ const AdicionarBeneficiarios = () => {
                                             ...formData,
                                             planoSaudeMentalNome: value
                                         });
-                                    }} onClick={(e) => setCheckedSaudeMental(e.target.checked)} value={planoSaudeMentalEmpresa}/>
+                                    }} onClick={(e) => setCheckedSaudeMental(e.target.checked)} value={planoSaudeMentalEmpresa}  checked={isCheckedSaudeMental}/>
                                     <Etiqueta for="checkboxSaudeMental" id="checkboxSaudeMentalEtiqueta" key={planoSaudeMentalEmpresa}>{planoSaudeMentalEmpresa}</Etiqueta>
                                 </>
 
