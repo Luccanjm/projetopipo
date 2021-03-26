@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import api from '../../services/api';
 import {Container, Table} from './styles';
 import Header from '../header';
@@ -11,11 +11,11 @@ class PaginacaoBeneficiarios extends Component {
         this.receivedData()
     }
 
+ 
     receivedData() {
         api
         .get(`beneficiarios?nomeEmpresa=${this.props.nome}`)
             .then(res => {
-
                 const data = res.data;
                 const slice = data.slice(this.state.offset, this.state.offset + this.state.perPage)
                 const postData = 
@@ -26,12 +26,12 @@ class PaginacaoBeneficiarios extends Component {
                             <th className="nomeClasse" >Nome</th>
                             <th>CPF</th>
                             <th className="dtClasse" >Dt.Admissão</th>
-                            <th>E-mail</th>
-                            <th className="pesoClasse" >Peso(kg)</th>
-                            <th className="alturaClasse" >Altura(cm)</th>
-                            <th className="horasClasse">Horas Meditadas últimos 7 dias</th>
-                            <th className="enderecoClasse">Endereço</th>
-
+                            {(data[0].email == "--") ?  null : <th>E-mail</th> }
+                            {(data[0].planoDentalNome == "--") ? null : <th className="pesoClasse" >Peso(kg)</th> }
+                            {(data[0].planoDentalNome == "--") ? null : <th className="alturaClasse" >Altura(cm)</th> }
+                            {(data[0].planoSaudeMentalNome == "--") ? null : <th className="horasClasse">Horas Meditadas últimos 7 dias</th>}
+                            {(data[0].endereco == "--") ? null : <th className="enderecoClasse">Endereço</th> }
+                
                             </thead>
                             <tbody>
                                 {slice.map((item) =>
@@ -40,12 +40,11 @@ class PaginacaoBeneficiarios extends Component {
                                         <td className="nomeClasse"  key={item.nome}>{item.nome}</td>
                                         <td key={item.cpf}>{item.cpf}</td>
                                         <td className="dtClasse" key={item.dtAdmissao}>{item.dtAdmissao}</td>
-                                        <td key={item.email}>{item.email}</td>
-                                        <td  className="pesoClasse" key={item.peso}>{item.peso}</td>
-                                        <td  className="alturaClasse" key={item.altura}>{item.altura}</td>
-                                        <td className="horasClasse" key={item.horasMed}>{item.horasMed}</td>
-                                        <td className="enderecoClasse" key={item.endereco}>{item.endereco}</td>
-
+                                        {(data[0].email == "--") ? null : <td key={item.email}>{item.email}</td> }
+                                        {(data[0].planoDentalNome == "--") ? null : <td  className="pesoClasse" key={item.peso}>{item.peso}</td> }
+                                        {(data[0].planoDentalNome == "--") ? null : <td  className="alturaClasse" key={item.altura}>{item.altura}</td> }
+                                        {(data[0].planoSaudeMentalNome == "--") ? null : <td className="horasClasse" key={item.horasMed}>{item.horasMed}</td> }
+                                        {(data[0].endereco == "--") ? null : <td className="enderecoClasse" key={item.endereco}>{item.endereco}</td> }
                                     </tr>
                                 )}
                                                     
