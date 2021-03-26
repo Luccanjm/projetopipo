@@ -4,7 +4,7 @@
 <p align="center">:seedling: Projeto realizado como exercício para vaga de Engenharia de Software da Pipo</p>
 
 <h4 align="center"> 
-	:construction:  Projeto Pipo Em construção...  :construction:
+	:construction:  Projeto Pipo Finalizado...  :construction:
 </h4>
 
 ### Pré-requisitos
