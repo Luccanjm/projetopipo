@@ -1,32 +1,47 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Footer from '../../componentes/footer';
 import Header from '../../componentes/header';
 import {BoxTitulo, ContainerGrid, Main, PlanosText, Titulo, BoxPlanos, BoxBeneficiarios } from './styles';
 import {useParams} from 'react-router-dom';
 
 const Beneficiarios = () => {
-    const { id, nome, cpf, dtAdmissao, email, endereco, peso, altura, horasMed, nomeEmpresa, planoSaudeNome, planoDentalNome, planoSaudeMentalNome  } = useParams();
+    const [arrayDadosBeneficiario, setArrayDadosBeneficiario] = useState(JSON.parse(localStorage.getItem('@pipo:dadosBeneficiario')));
+    const [dadosBeneficiarios ,setDadosBeneficiarios] = useState({
+        nome: arrayDadosBeneficiario.nomeBeneficiario,
+        nomeEmpresa: arrayDadosBeneficiario.nomeEmpresaBenef,
+        cpf: arrayDadosBeneficiario.cpf,
+        dtAdmissao: arrayDadosBeneficiario.dtAdmissao,
+        email: arrayDadosBeneficiario.email,
+        peso: arrayDadosBeneficiario.peso,
+        altura: arrayDadosBeneficiario.altura,
+        horasMed: arrayDadosBeneficiario.horasMed,
+        endereco: arrayDadosBeneficiario.endereco,
+        planoDentalNome: arrayDadosBeneficiario.planoDentalNome,
+        planoSaudeNome: arrayDadosBeneficiario.planoSaudeNome,
+        planoSaudeMentalNome: arrayDadosBeneficiario.planoSaudeMentalNome
+    })
+    
+    const { id, nome  } = useParams();
 
     function Parametros(){
-        const params = useParams("/beneficiarios/:id/:nome/:cpf/:dtAdmissao/:email/:endereco/:peso/:altura/:horasMed/:nomeEmpresa/:planoSaudeNome/:planoDentalNome/:planoSaudeMentalNome")
+        const params = useParams("/beneficiarios/:id/:nome")
 
-        let { id, nome, cpf, dtAdmissao, email, endereco, peso, altura, horasMed, nomeEmpresa, planoSaudeNome, planoDentalNome, planoSaudeMentalNome  } = params;
+        let { id, nome } = params;
         return <> </>
     }
-
     return(
         <ContainerGrid>
         <Header id="headerComponente"></Header>
         <Main>
             <BoxTitulo>
-                <Titulo key={nomeEmpresa}>Ficha do Beneficiário {nome} da Empresa {nomeEmpresa}</Titulo>
+                <Titulo key={dadosBeneficiarios.nomeEmpresa}>Ficha do Beneficiário {nome} da Empresa {dadosBeneficiarios.nomeEmpresa}</Titulo>
             </BoxTitulo>
             <BoxPlanos>
                 <PlanosText>
                     <li>Benefícios</li>
-                        <li>{planoSaudeNome}</li>
-                        <li>{planoDentalNome}</li>
-                        <li>{planoSaudeMentalNome}</li>
+                        <li>{dadosBeneficiarios.planoSaudeNome}</li>
+                        <li>{dadosBeneficiarios.planoDentalNome}</li>
+                        <li>{dadosBeneficiarios.planoSaudeMentalNome}</li>
                 </PlanosText>
             </BoxPlanos>
             <BoxBeneficiarios>
@@ -43,13 +58,13 @@ const Beneficiarios = () => {
                 </ul>
                 <ul>
                         <li>{nome}</li>
-                        <li>{cpf}</li>
-                        <li>{dtAdmissao}</li>
-                        <li>{email}</li>
-                        <li className="enderecoClasse">{endereco}</li>
-                        <li>{peso}</li>
-                        <li>{altura}</li>
-                        <li className="horasClasse">{horasMed}</li>
+                        <li>{dadosBeneficiarios.cpf}</li>
+                        <li>{dadosBeneficiarios.dtAdmissao}</li>
+                        <li>{dadosBeneficiarios.email}</li>
+                        <li className="enderecoClasse">{dadosBeneficiarios.endereco}</li>
+                        <li>{dadosBeneficiarios.peso}</li>
+                        <li>{dadosBeneficiarios.altura}</li>
+                        <li className="horasClasse">{dadosBeneficiarios.horasMed}</li>
 
                     
                 </ul>

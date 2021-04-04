@@ -1,15 +1,14 @@
 import React, {Component} from 'react';
 import api from '../../services/api';
 import {Container, Table, BotaoRedirecionar, LinkBotao} from './styles';
-import Header from '../header';
-import Footer from '../footer';
 import ReactPaginate from 'react-paginate';
+
 
 class PaginacaoEmpresas extends Component {
     componentDidMount(){
         this.receivedData()
     }
-
+   
     receivedData() {
         api
         .get(`empresas`)
@@ -28,22 +27,69 @@ class PaginacaoEmpresas extends Component {
                                 <th>#</th>
                             </thead>
                             <tbody>
-                                {slice.map((item) =>
+                                {slice.map((item) => 
+                                 
+
                                     <tr>
+
                                         <td onClick={() =>
-                                        window.location.href = `/empresas/${item.id}/${item.nome}/${item.cnpj}/${item.qtdPlanos}/${item.planoDentalEmpresa}/${item.planoSaudeEmpresa}/${item.planoSaudeMentalEmpresa}`} key={item.nome}> {item.nome}</td>
+                                        (window.location.href = `/empresas/${item.id}/${item.nome}`,
+                                            localStorage.setItem('@pipo:dadosEmpresa', JSON.stringify({
+                                                nome:item.nome,
+                                                cnpj: item.cnpj,
+                                                planoSaudeEmpresa: item.planoSaudeEmpresa,
+                                                planoDentalEmpresa: item.planoDentalEmpresa,
+                                                planoSaudeMentalEmpresa: item.planoSaudeMentalEmpresa,
+                                                qtdPlanos: item.qtdPlanos
+                                            }))
+                                        )
+                                        } key={item.nome}> 
+                                            {item.nome}
+                                        </td>
+
                                         <td className="cnpjClasse" onClick={() =>
-                                        window.location.href = `/empresas/${item.id}/${item.nome}/${item.cnpj}/${item.qtdPlanos}/${item.planoDentalEmpresa}/${item.planoSaudeEmpresa}/${item.planoSaudeMentalEmpresa}`} key={item.cnpj}> {item.cnpj}</td>
+                                        (window.location.href = `/empresas/${item.id}/${item.nome}`,
+                                            localStorage.setItem('@pipo:dadosEmpresa', JSON.stringify({
+                                                nome:item.nome,
+                                                cnpj: item.cnpj,
+                                                planoSaudeEmpresa: item.planoSaudeEmpresa,
+                                                planoDentalEmpresa: item.planoDentalEmpresa,
+                                                planoSaudeMentalEmpresa: item.planoSaudeMentalEmpresa,
+                                                qtdPlanos: item.qtdPlanos
+                                            }))
+                                        )} key={item.cnpj}> 
+                                            {item.cnpj}</td>
+
                                         <td className="qtdClasse" onClick={() =>
-                                        window.location.href = `/empresas/${item.id}/${item.nome}/${item.cnpj}/${item.qtdPlanos}/${item.planoDentalEmpresa}/${item.planoSaudeEmpresa}/${item.planoSaudeMentalEmpresa}`} key={item.qtdPlanos}> {item.qtdPlanos}</td>
+                                        (window.location.href = `/empresas/${item.id}/${item.nome}`,
+                                            localStorage.setItem('@pipo:dadosEmpresa', JSON.stringify({
+                                                nome:item.nome,
+                                                cnpj: item.cnpj,
+                                                planoSaudeEmpresa: item.planoSaudeEmpresa,
+                                                planoDentalEmpresa: item.planoDentalEmpresa,
+                                                planoSaudeMentalEmpresa: item.planoSaudeMentalEmpresa,
+                                                qtdPlanos: item.qtdPlanos
+                                            }))
+                                        )} key={item.qtdPlanos}>
+                                            {item.qtdPlanos}</td>
+                                            
                                         <td onClick={() =>
-                                        window.location.href = `/adicionar/${item.id}/${item.nome}/${item.cnpj}/${item.qtdPlanos}/${item.planoDentalEmpresa}/${item.planoSaudeEmpresa}/${item.planoSaudeMentalEmpresa}`}>
+                                        (window.location.href = `/adicionar/${item.id}/${item.nome}`,
+                                            localStorage.setItem('@pipo:dadosEmpresa', JSON.stringify({
+                                                nome:item.nome,
+                                                cnpj: item.cnpj,
+                                                planoSaudeEmpresa: item.planoSaudeEmpresa,
+                                                planoDentalEmpresa: item.planoDentalEmpresa,
+                                                planoSaudeMentalEmpresa: item.planoSaudeMentalEmpresa,
+                                                qtdPlanos: item.qtdPlanos
+                                            }))
+                                        )}>
                                             <BotaoRedirecionar><LinkBotao>Adicionar Beneficiário</LinkBotao></BotaoRedirecionar></td>  
                                     
                                         
                                     </tr>
-                                                
-                                )}
+                                 
+                                    )}
                                                     
                                 
                             </tbody>

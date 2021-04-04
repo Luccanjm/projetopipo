@@ -24,7 +24,7 @@ import {
 } from './styles';
 
 const AdicionarBeneficiarios = () => {
-    const { id, nome, cnpj, qtdPlanos, planoDentalEmpresa,planoSaudeEmpresa, planoSaudeMentalEmpresa  } = useParams();
+    const { id, nome  } = useParams();
 
     const [dadosPlano, setDadosPlano] = useState([]);
     const [erroMensagem, setErroMensagem] = useState('');
@@ -35,6 +35,16 @@ const AdicionarBeneficiarios = () => {
     const [isCheckedSaude, setCheckedSaude] = useState(false);
     const [isCheckedDental, setCheckedDental] = useState(false);
     const [isCheckedSaudeMental, setCheckedSaudeMental] = useState(false);
+    
+    const [arrayDados, setArrayDados] = useState(JSON.parse(localStorage.getItem('@pipo:dadosEmpresa')))
+    const [dadosEmpresa,setDadosEmpresa] = useState({
+        nome: arrayDados.nome,
+        cnpj: arrayDados.cnpj,
+        planoSaudeEmpresa: arrayDados.planoSaudeEmpresa,
+        planoDentalEmpresa: arrayDados.planoDentalEmpresa,
+        planoSaudeMentalEmpresa: arrayDados.planoSaudeMentalEmpresa,
+        qtdPlanos: arrayDados.qtdPlanos
+    })
     const [formData, setFormData] = useState({
         nome: "--",
         cpf: "--",
@@ -50,13 +60,12 @@ const AdicionarBeneficiarios = () => {
         planoSaudeNome: "--"
     });
 
-
 // --------------------------------------------------------------------------------------------------------------------------------------------------
     
     const buscarDadosPlanoSaude = useCallback(
         async() => {
             try {
-                const resposta = await api.get(`planoSaude?nomePlano=${planoSaudeEmpresa}`);
+                const resposta = await api.get(`planoSaude?nomePlano=${dadosEmpresa.planoSaudeEmpresa}`);
                 setDadosPlano(resposta.data);
                 setEmailTrue(dadosPlano.map(item => item.emailIsTrue));
                 setEnderecoTrue(dadosPlano.map(item => item.enderecoIsTrue));
@@ -64,10 +73,9 @@ const AdicionarBeneficiarios = () => {
                 console.log("Erro na busca da API(buscarDadosPlanoSaude)", error);
                 setErroMensagem(error);
             }
-        },[dadosPlano]
+        },[formData]
     );
     useEffect(() => {
-
         buscarDadosPlanoSaude();
     },[buscarDadosPlanoSaude])
 
@@ -165,10 +173,10 @@ const AdicionarBeneficiarios = () => {
                         <TituloCheck>Selecione pelo menos um plano </TituloCheck>
 
                         <BoxCheck>
-                            {planoSaudeEmpresa == "--" ? 
+                            {dadosEmpresa.planoSaudeEmpresa == "--" ? 
                                 <>
                                     <Input id="checkboxSaude" type="checkbox" disabled />
-                                    <Etiqueta for="checkboxSaude" id="checkboxSaudeEtiqueta" key={planoSaudeEmpresa}>{planoSaudeEmpresa}</Etiqueta>
+                                    <Etiqueta for="checkboxSaude" id="checkboxSaudeEtiqueta" key={dadosEmpresa.planoSaudeEmpresa}>{dadosEmpresa.planoSaudeEmpresa}</Etiqueta>
                                 </>
                             : 
                                 <>
@@ -178,15 +186,15 @@ const AdicionarBeneficiarios = () => {
                                         ...formData,
                                         planoSaudeNome: value
                                     });
-                                    }} onClick={(e) => setCheckedSaude(e.target.checked)} value={planoSaudeEmpresa} checked={isCheckedSaude}/>
-                                    <Etiqueta for="checkboxSaude" id="checkboxSaudeEtiqueta" key={planoSaudeEmpresa}>{planoSaudeEmpresa}</Etiqueta>
+                                    }} onClick={(e) => setCheckedSaude(e.target.checked)} value={dadosEmpresa.planoSaudeEmpresa} checked={isCheckedSaude}/>
+                                    <Etiqueta for="checkboxSaude" id="checkboxSaudeEtiqueta" key={dadosEmpresa.planoSaudeEmpresa}>{dadosEmpresa.planoSaudeEmpresa}</Etiqueta>
                                 </>
                             }
               
-                            {planoDentalEmpresa == "--" ?
+                            {dadosEmpresa.planoDentalEmpresa == "--" ?
                                 <>
                                     <Input id="checkboxDental" type="checkbox" disabled/>
-                                    <Etiqueta for="checkboxDental" id="checkboxDentalEtiqueta" key={planoDentalEmpresa}>{planoDentalEmpresa}</Etiqueta>
+                                    <Etiqueta for="checkboxDental" id="checkboxDentalEtiqueta" key={dadosEmpresa.planoDentalEmpresa}>{dadosEmpresa.planoDentalEmpresa}</Etiqueta>
                                 </>
                             :
                                 <>
@@ -196,16 +204,16 @@ const AdicionarBeneficiarios = () => {
                                             ...formData,
                                             planoDentalNome: value
                                         });
-                                     }} onClick={(e) => setCheckedDental(e.target.checked)} value={planoDentalEmpresa} checked={isCheckedDental}/>
-                                    <Etiqueta for="checkboxDental" id="checkboxDentalEtiqueta" key={planoDentalEmpresa}>{planoDentalEmpresa}</Etiqueta>
+                                     }} onClick={(e) => setCheckedDental(e.target.checked)} value={dadosEmpresa.planoDentalEmpresa} checked={isCheckedDental}/>
+                                    <Etiqueta for="checkboxDental" id="checkboxDentalEtiqueta" key={dadosEmpresa.planoDentalEmpresa}>{dadosEmpresa.planoDentalEmpresa}</Etiqueta>
                                 </>
                             }
                                   
 
-                            {planoSaudeMentalEmpresa == "--" ?
+                            {dadosEmpresa.planoSaudeMentalEmpresa == "--" ?
                                 <>
                                     <Input id="checkboxSaudeMental" type="checkbox" disabled/>
-                                    <Etiqueta for="checkboxSaudeMental" id="checkboxSaudeMentalEtiqueta" key={planoSaudeMentalEmpresa}>{planoSaudeMentalEmpresa}</Etiqueta>
+                                    <Etiqueta for="checkboxSaudeMental" id="checkboxSaudeMentalEtiqueta" key={dadosEmpresa.planoSaudeMentalEmpresa}>{dadosEmpresa.planoSaudeMentalEmpresa}</Etiqueta>
                                 </>
                             :
                                 <>
@@ -215,8 +223,8 @@ const AdicionarBeneficiarios = () => {
                                             ...formData,
                                             planoSaudeMentalNome: value
                                         });
-                                    }} onClick={(e) => setCheckedSaudeMental(e.target.checked)} value={planoSaudeMentalEmpresa}  checked={isCheckedSaudeMental}/>
-                                    <Etiqueta for="checkboxSaudeMental" id="checkboxSaudeMentalEtiqueta" key={planoSaudeMentalEmpresa}>{planoSaudeMentalEmpresa}</Etiqueta>
+                                    }} onClick={(e) => setCheckedSaudeMental(e.target.checked)} value={dadosEmpresa.planoSaudeMentalEmpresa}  checked={isCheckedSaudeMental}/>
+                                    <Etiqueta for="checkboxSaudeMental" id="checkboxSaudeMentalEtiqueta" key={dadosEmpresa.planoSaudeMentalEmpresa}>{dadosEmpresa.planoSaudeMentalEmpresa}</Etiqueta>
                                 </>
 
                             }

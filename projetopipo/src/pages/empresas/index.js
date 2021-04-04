@@ -12,8 +12,7 @@ import {
         TituloBeneficiarios, 
         TituloBeneficios, 
         TextoBeneficios, 
-        Table, 
-        TableBeneficiarios
+        Table
     } from './styles';
 import PaginacaoBeneficiarios from '../../componentes/paginacaoBeneficiarios';
 
@@ -22,13 +21,27 @@ const Empresas = () => {
 
     const [beneficiarios, setBeneficiarios] = useState([]);
     const [erroMensagem, setErroMensagem] = useState('');
+    const [arrayDados, setArrayDados] = useState(JSON.parse(localStorage.getItem('@pipo:dadosEmpresa')))
+    const [dadosEmpresa,setDadosEmpresa] = useState({
+        nome: arrayDados.nome,
+        cnpj: arrayDados.cnpj,
+        planoSaudeEmpresa: arrayDados.planoSaudeEmpresa,
+        planoDentalEmpresa: arrayDados.planoDentalEmpresa,
+        planoSaudeMentalEmpresa: arrayDados.planoSaudeMentalEmpresa,
+        qtdPlanos: arrayDados.qtdPlanos
+    })
+    const { id, nome  } = useParams();
 
+    function Parametros(){
+        const params = useParams("/empresas/:id/:nome")
 
-
+        let { id, nome } = params;
+        return <> </>
+    }
     const exibirBeneficiarios = useCallback(
         async() => {
             try {
-                const resposta = await api.get(`empresas/0/beneficiarios?nomeEmpresa=${nome}`);
+                const resposta = await api.get(`empresas/0/beneficiarios?nomeEmpresa=${dadosEmpresa.nome}`);
                setBeneficiarios(resposta.data);
             //    console.log(beneficiarios);
  
@@ -36,23 +49,11 @@ const Empresas = () => {
                 console.log("Erro na busca da API(exibirBeneficiarios)", error);
                 setErroMensagem(error);
             }
-        },[beneficiarios]
+        },[]
     );
     useEffect(() => {
         exibirBeneficiarios();
     },[exibirBeneficiarios])
-
-
-
-    const { id, nome, cnpj, qtdPlanos, planoDentalEmpresa,planoSaudeEmpresa, planoSaudeMentalEmpresa  } = useParams();
-
-    function Parametros(){
-        const params = useParams("/empresas/:id/:nome/:cnpj/:qtdPlanos/:planoDentalEmpresa/:planoSaudeEmpresa/:planoSaudeMentalEmpresa/")
-
-        let { id, nome, cnpj, qtdPlanos, planoDentalEmpresa,planoSaudeEmpresa, planoSaudeMentalEmpresa } = params;
-        return <> </>
-    }
-
 
    
     return(
@@ -68,21 +69,21 @@ const Empresas = () => {
                     </thead>
                     <tbody>
                         <tr>
-                            <td>{nome}</td>
-                            <td>{cnpj}</td>
-                            <td className="qtdBenefClasse">{qtdPlanos}</td>
+                            <td>{dadosEmpresa.nome}</td>
+                            <td>{dadosEmpresa.cnpj}</td>
+                            <td className="qtdBenefClasse">{dadosEmpresa.qtdPlanos}</td>
                         </tr>
                     </tbody>
-                </Table>
+                </Table> 
               
             </BoxPlano>
-            <BoxBeneficios>
+             <BoxBeneficios>
                 <TituloBeneficios>Benefícios</TituloBeneficios>
-                <TextoBeneficios>{planoSaudeEmpresa}</TextoBeneficios>
-                <TextoBeneficios>{planoDentalEmpresa}</TextoBeneficios>
-                <TextoBeneficios>{planoSaudeMentalEmpresa}</TextoBeneficios>
+                <TextoBeneficios>{dadosEmpresa.planoSaudeEmpresa}</TextoBeneficios>
+                <TextoBeneficios>{dadosEmpresa.planoDentalEmpresa}</TextoBeneficios>
+                <TextoBeneficios>{dadosEmpresa.planoSaudeMentalEmpresa}</TextoBeneficios>
                 
-            </BoxBeneficios>
+            </BoxBeneficios> 
 
 
             <BoxBeneficiarios>

@@ -1,8 +1,7 @@
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 import api from '../../services/api';
 import {Container, Table} from './styles';
-import Header from '../header';
-import Footer from '../footer';
+
 import ReactPaginate from 'react-paginate';
 
 
@@ -36,7 +35,22 @@ class PaginacaoBeneficiarios extends Component {
                             <tbody>
                                 {slice.map((item) =>
                                     <tr onClick={() =>
-                                        window.location.href = `/beneficiarios/${item.id}/${item.nome}/${item.cpf}/${item.dtAdmissao}/${item.email}/${item.endereco}/${item.peso}/${item.altura}/${item.horasMed}/${item.nomeEmpresa}/${item.planoDentalNome}/${item.planoSaudeNome}/${item.planoSaudeMentalNome}`}>
+                                        (window.location.href = `/beneficiarios/${item.id}/${item.nome}`,
+                                            localStorage.setItem('@pipo:dadosBeneficiario', JSON.stringify({
+                                                nomeBeneficiario:item.nome,
+                                                nomeEmpresaBenef: item.nomeEmpresa,
+                                                cpf: item.cpf,
+                                                dtAdmissao: item.dtAdmissao,
+                                                email: item.email,
+                                                peso: item.peso,
+                                                altura: item.altura,
+                                                horasMed: item.horasMed,
+                                                endereco: item.endereco,
+                                                planoDentalNome: item.planoDentalNome,
+                                                planoSaudeNome: item.planoSaudeNome,
+                                                planoSaudeMentalNome:item.planoSaudeMentalNome
+                                            }))                                     
+                                        )}>
                                         <td className="nomeClasse"  key={item.nome}>{item.nome}</td>
                                         <td key={item.cpf}>{item.cpf}</td>
                                         <td className="dtClasse" key={item.dtAdmissao}>{item.dtAdmissao}</td>

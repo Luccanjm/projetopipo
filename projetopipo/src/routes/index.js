@@ -11,9 +11,9 @@ const Routes = () => (
         <Switch>
             <Route path="/" component={Dashboard} exact />
             <Route path="/dashboard" component={Dashboard}/>
-            <Route path="/empresas/:id/:nome/:cnpj/:qtdPlanos/:planoDentalEmpresa/:planoSaudeEmpresa/:planoSaudeMentalEmpresa" component={Empresas} />
-            <Route path="/beneficiarios/:id/:nome/:cpf/:dtAdmissao/:email/:endereco/:peso/:altura/:horasMed/:nomeEmpresa/:planoSaudeNome/:planoDentalNome/:planoSaudeMentalNome" component={Beneficiarios} />
-            <Route path="/adicionar/:id/:nome/:cnpj/:qtdPlanos/:planoDentalEmpresa/:planoSaudeEmpresa/:planoSaudeMentalEmpresa" component={AdicionarBeneficiarios} />
+            <Route path="/empresas/:id/:nome" component={Empresas} />
+            <Route path="/beneficiarios/:id/:nome" component={Beneficiarios} />
+            <Route path="/adicionar/:id/:nome" component={AdicionarBeneficiarios} />
         </Switch>
     </BrowserRouter>
 );
