@@ -89,7 +89,7 @@ const Empresas = () => {
             <BoxBeneficiarios>
                 <TituloBeneficiarios>Beneficiários</TituloBeneficiarios>
 
-              <PaginacaoBeneficiarios nome={nome}></PaginacaoBeneficiarios>
+              <PaginacaoBeneficiarios></PaginacaoBeneficiarios>
             </BoxBeneficiarios>
         </Main>
         <Footer id="footerComponente"></Footer>

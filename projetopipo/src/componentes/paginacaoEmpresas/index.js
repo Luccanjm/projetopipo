@@ -1,157 +1,136 @@
-import React, {Component} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import api from '../../services/api';
 import {Container, Table, BotaoRedirecionar, LinkBotao} from './styles';
 import ReactPaginate from 'react-paginate';
 
+export default function PaginacaoEmpresas () {
+    const [data, setData] = useState([]);
+    const [erroMensagem, setErroMensagem] = useState('');
+    const [selectedPage, setSelectedPage] = useState(0);
+    const [estado, setEstado] = useState ({
+        offset: 1,
+        perPage: 8,
+        currentPage: selectedPage
+    });
 
-class PaginacaoEmpresas extends Component {
-    componentDidMount(){
-        this.receivedData()
-    }
+    const recebendoData = useCallback(
+        async(e) => {
+            try{
+                const resposta = await api.get(`empresas?_limit=${8}&_page=${selectedPage + 1}`);
+                setData(resposta.data);
+            }catch(error){
+                console.log("Erro na busca da API(paginacaoEmpresas)", error);
+                setErroMensagem(error);
+            }
+        },[estado]
+    )
    
-    receivedData() {
-        api
-        .get(`empresas`)
-            .then(res => {
+    const handlePageClick = (e) => {
+        setSelectedPage(e.selected);
+        const offset = selectedPage * estado.perPage;
 
-                const data = res.data;
-                const slice = data.slice(this.state.offset, this.state.offset + this.state.perPage)
-                const postData = 
-                <React.Fragment>
-                    <Container>
-                        <Table>
-                            <thead>
-                                <th>Nome</th>
-                                <th className="cnpjClasse">CNPJ</th>
-                                <th className="qtdClasse">Qtd. Benefícios</th>
-                                <th>#</th>
-                            </thead>
-                            <tbody>
-                                {slice.map((item) => 
-                                 
+        setEstado({
+            currentPage: selectedPage,
+            offset: offset,
+            perPage:8
+        });
+    };
 
-                                    <tr>
+    useEffect(() => {
+        recebendoData();
+    },[recebendoData]);
 
-                                        <td onClick={() =>
-                                        (window.location.href = `/empresas/${item.id}/${item.nome}`,
-                                            localStorage.setItem('@pipo:dadosEmpresa', JSON.stringify({
-                                                nome:item.nome,
-                                                cnpj: item.cnpj,
-                                                planoSaudeEmpresa: item.planoSaudeEmpresa,
-                                                planoDentalEmpresa: item.planoDentalEmpresa,
-                                                planoSaudeMentalEmpresa: item.planoSaudeMentalEmpresa,
-                                                qtdPlanos: item.qtdPlanos
-                                            }))
-                                        )
-                                        } key={item.nome}> 
-                                            {item.nome}
-                                        </td>
+    
+    return (
+        <Container>
+            <Table>
+                <thead>
+                    <th>Nome</th>
+                    <th className="cnpjClasse">CNPJ</th>
+                    <th className="qtdClasse">Qtd. Benefícios</th>
+                    <th>#</th>
+                </thead>
+                <tbody>
+                    {data.map((item) => 
+                        <tr>
+                            <td onClick={() =>
+                                (window.location.href = `/empresas/${item.id}/${item.nome}`,
+                                localStorage.setItem('@pipo:dadosEmpresa', JSON.stringify({
+                                    nome:item.nome,
+                                    cnpj: item.cnpj,
+                                    planoSaudeEmpresa: item.planoSaudeEmpresa,
+                                    planoDentalEmpresa: item.planoDentalEmpresa,
+                                    planoSaudeMentalEmpresa: item.planoSaudeMentalEmpresa,
+                                    qtdPlanos: item.qtdPlanos
+                                }))
+                                )
+                            } key={item.nome}> 
+                                {item.nome}
+                            </td>
 
-                                        <td className="cnpjClasse" onClick={() =>
-                                        (window.location.href = `/empresas/${item.id}/${item.nome}`,
-                                            localStorage.setItem('@pipo:dadosEmpresa', JSON.stringify({
-                                                nome:item.nome,
-                                                cnpj: item.cnpj,
-                                                planoSaudeEmpresa: item.planoSaudeEmpresa,
-                                                planoDentalEmpresa: item.planoDentalEmpresa,
-                                                planoSaudeMentalEmpresa: item.planoSaudeMentalEmpresa,
-                                                qtdPlanos: item.qtdPlanos
-                                            }))
-                                        )} key={item.cnpj}> 
-                                            {item.cnpj}</td>
+                            <td className="cnpjClasse" onClick={() =>
+                                (window.location.href = `/empresas/${item.id}/${item.nome}`,
+                                localStorage.setItem('@pipo:dadosEmpresa', JSON.stringify({
+                                    nome:item.nome,
+                                    cnpj: item.cnpj,
+                                    planoSaudeEmpresa: item.planoSaudeEmpresa,
+                                    planoDentalEmpresa: item.planoDentalEmpresa,
+                                    planoSaudeMentalEmpresa: item.planoSaudeMentalEmpresa,
+                                    qtdPlanos: item.qtdPlanos
+                                }))
+                                )} key={item.cnpj}> 
+                                    {item.cnpj}
+                            </td>
 
-                                        <td className="qtdClasse" onClick={() =>
-                                        (window.location.href = `/empresas/${item.id}/${item.nome}`,
-                                            localStorage.setItem('@pipo:dadosEmpresa', JSON.stringify({
-                                                nome:item.nome,
-                                                cnpj: item.cnpj,
-                                                planoSaudeEmpresa: item.planoSaudeEmpresa,
-                                                planoDentalEmpresa: item.planoDentalEmpresa,
-                                                planoSaudeMentalEmpresa: item.planoSaudeMentalEmpresa,
-                                                qtdPlanos: item.qtdPlanos
-                                            }))
-                                        )} key={item.qtdPlanos}>
-                                            {item.qtdPlanos}</td>
+                            <td className="qtdClasse" onClick={() =>
+                                (window.location.href = `/empresas/${item.id}/${item.nome}`,
+                                localStorage.setItem('@pipo:dadosEmpresa', JSON.stringify({
+                                    nome:item.nome,
+                                    cnpj: item.cnpj,
+                                    planoSaudeEmpresa: item.planoSaudeEmpresa,
+                                    planoDentalEmpresa: item.planoDentalEmpresa,
+                                    planoSaudeMentalEmpresa: item.planoSaudeMentalEmpresa,
+                                    qtdPlanos: item.qtdPlanos
+                                }))
+                                )} key={item.qtdPlanos}>
+                                    {item.qtdPlanos}
+                            </td>
                                             
-                                        <td onClick={() =>
-                                        (window.location.href = `/adicionar/${item.id}/${item.nome}`,
-                                            localStorage.setItem('@pipo:dadosEmpresa', JSON.stringify({
-                                                nome:item.nome,
-                                                cnpj: item.cnpj,
-                                                planoSaudeEmpresa: item.planoSaudeEmpresa,
-                                                planoDentalEmpresa: item.planoDentalEmpresa,
-                                                planoSaudeMentalEmpresa: item.planoSaudeMentalEmpresa,
-                                                qtdPlanos: item.qtdPlanos
-                                            }))
-                                        )}>
-                                            <BotaoRedirecionar><LinkBotao>Adicionar Beneficiário</LinkBotao></BotaoRedirecionar></td>  
+                            <td onClick={() =>
+                                (window.location.href = `/adicionar/${item.id}/${item.nome}`,
+                                localStorage.setItem('@pipo:dadosEmpresa', JSON.stringify({
+                                    nome:item.nome,
+                                    cnpj: item.cnpj,
+                                    planoSaudeEmpresa: item.planoSaudeEmpresa,
+                                    planoDentalEmpresa: item.planoDentalEmpresa,
+                                    planoSaudeMentalEmpresa: item.planoSaudeMentalEmpresa,
+                                    qtdPlanos: item.qtdPlanos
+                                }))
+                                )}>
+                                    <BotaoRedirecionar><LinkBotao>Adicionar Beneficiário</LinkBotao></BotaoRedirecionar></td>  
                                     
                                         
-                                    </tr>
-                                 
-                                    )}
-                                                    
-                                
-                            </tbody>
-                        </Table>
-                    </Container>
-                </React.Fragment>
+                        </tr>  
+                    )}  
+                </tbody>
+            </Table>
 
-                this.setState({
-                    pageCount: Math.ceil(data.length / this.state.perPage),
-                   
-                    postData
-                })
-            });
-    }
-    handlePageClick = (e) => {
-        const selectedPage = e.selected;
-        const offset = selectedPage * this.state.perPage;
-
-        this.setState({
-            currentPage: selectedPage,
-            offset: offset
-        }, () => {
-            this.receivedData()
-        });
-
-    };
+            <ReactPaginate
+                previousLabel={"Voltar"}
+                nextLabel={"Próximo"}
+                breakLabel={"..."}
+                breakClassName={"break-me"}
+                pageCount={2}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={5}
+                onPageChange={handlePageClick}
+                containerClassName={"pagination"}
+                subContainerClassName={"pages pagination"}
+                activeClassName={"active"}
+                initialPage={0}
+            />
+        </Container>
+    );
     
-    constructor(props) {
-        super(props);
-        this.state = {
-          offset: 0,
-          data: [],
-          perPage: 8,
-          currentPage: 0
-    };
-    
-    }
-
-
-
-    render() {
-        return (
-            <Container>
-                
-                {this.state.postData}
-                <ReactPaginate
-                    previousLabel={"Voltar"}
-                    nextLabel={"Próximo"}
-                    breakLabel={"..."}
-                    breakClassName={"break-me"}
-                    pageCount={this.state.pageCount}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={5}
-                    onPageChange={this.handlePageClick}
-                    containerClassName={"pagination"}
-                    subContainerClassName={"pages pagination"}
-                    activeClassName={"active"}/>
-            
-
-            </Container>
-        );
-    }
 }
 
-export default PaginacaoEmpresas;
