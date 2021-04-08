@@ -8,7 +8,6 @@ export default function PaginacaoBeneficiarios () {
     const [data, setData] = useState([]);
     const [erroMensagem, setErroMensagem] = useState('');
     const [selectedPage, setSelectedPage] = useState('');
-    const [valorTotal, setValorTotal] = useState([]);
     const [estado, setEstado] = useState ({
         offset: 1,
         perPage: 4,
@@ -22,8 +21,6 @@ export default function PaginacaoBeneficiarios () {
                     const resposta = await api.get(`beneficiarios?nomeEmpresa=${arrayDados.nome}&_limit=${4}&_page=${selectedPage +1}`)
                     setData(resposta.data);
 
-                    const recebendoValor = await api.get(`beneficiarios?nomeEmpresa=${arrayDados.nome}`)
-                    setValorTotal(Math.ceil(recebendoValor.data.length / estado.perPage))         
 
                 }catch(error){
                     console.log("Erro na busca da API(paginacaoBeneficiarios)", error);
@@ -99,7 +96,7 @@ export default function PaginacaoBeneficiarios () {
                     nextLabel={"Próximo"}
                     breakLabel={"..."}
                     breakClassName={"break-me"}
-                    pageCount={valorTotal}
+                    pageCount={2}
                     marginPagesDisplayed={2}
                     pageRangeDisplayed={5}
                     onPageChange={handlePageClick}
