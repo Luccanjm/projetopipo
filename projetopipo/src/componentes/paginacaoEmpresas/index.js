@@ -7,6 +7,7 @@ export default function PaginacaoEmpresas () {
     const [data, setData] = useState([]);
     const [erroMensagem, setErroMensagem] = useState('');
     const [selectedPage, setSelectedPage] = useState(0);
+    const [valorTotal, setValorTotal] = useState([])
     const [estado, setEstado] = useState ({
         offset: 1,
         perPage: 8,
@@ -18,6 +19,7 @@ export default function PaginacaoEmpresas () {
             try{
                 const resposta = await api.get(`empresas?_limit=${8}&_page=${selectedPage + 1}`);
                 setData(resposta.data);
+                setValorTotal(Math.ceil(resposta.headers['x-total-count'] / estado.perPage));
             }catch(error){
                 console.log("Erro na busca da API(paginacaoEmpresas)", error);
                 setErroMensagem(error);
@@ -120,7 +122,7 @@ export default function PaginacaoEmpresas () {
                 nextLabel={"Próximo"}
                 breakLabel={"..."}
                 breakClassName={"break-me"}
-                pageCount={2}
+                pageCount={valorTotal}
                 marginPagesDisplayed={2}
                 pageRangeDisplayed={5}
                 onPageChange={handlePageClick}

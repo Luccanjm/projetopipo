@@ -8,20 +8,21 @@ export default function PaginacaoBeneficiarios () {
     const [data, setData] = useState([]);
     const [erroMensagem, setErroMensagem] = useState('');
     const [selectedPage, setSelectedPage] = useState('');
+    const [valorTotal, setValorTotal] = useState([]);
     const [estado, setEstado] = useState ({
         offset: 1,
         perPage: 4,
         currentPage: selectedPage
     });
 
-    const [arrayDados, setArrayDados] = useState(JSON.parse(localStorage.getItem('@pipo:dadosEmpresa')))
+    const [arrayDados, setArrayDados] = useState(JSON.parse(localStorage.getItem('@pipo:dadosEmpresa')));
+
         const recebendoData = useCallback( 
         async(e) => {
                 try{
                     const resposta = await api.get(`beneficiarios?nomeEmpresa=${arrayDados.nome}&_limit=${4}&_page=${selectedPage +1}`)
                     setData(resposta.data);
-
-
+                    setValorTotal(Math.ceil(resposta.headers['x-total-count'] / estado.perPage));
                 }catch(error){
                     console.log("Erro na busca da API(paginacaoBeneficiarios)", error);
                     setErroMensagem(error);
@@ -38,7 +39,7 @@ export default function PaginacaoBeneficiarios () {
                 perPage:4
                 });
             };
-        
+
 
         useEffect(() => {
             recebendoData();
@@ -96,7 +97,7 @@ export default function PaginacaoBeneficiarios () {
                     nextLabel={"Próximo"}
                     breakLabel={"..."}
                     breakClassName={"break-me"}
-                    pageCount={2}
+                    pageCount={valorTotal}
                     marginPagesDisplayed={2}
                     pageRangeDisplayed={5}
                     onPageChange={handlePageClick}
